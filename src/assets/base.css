@@ -1,10 +1,23 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+@font-face {
+  font-family: vazir;
+  src: url('./fonts/Vazirmatn-Thin.ttf');
+}
+@font-face {
+  font-family: vazirBold;
+  src: url('./fonts/Vazirmatn-SemiBold.ttf');
+}
 *,
 *::before,
 *::after {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
+}
+body{
+  direction: rtl;
+  font-family: vazirbold;
+  font-weight: bold;
 }
