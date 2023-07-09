@@ -2,25 +2,43 @@
     <div class="nav">
         <div class="title"><router-link to="/">شانس اول</router-link></div>
         <div class="linkNav text-sm">
-            <div>ایجاد</div>
-            <div>قرعه کشی ها</div>
-            <div>گیت هاب</div>
-            <div>درباره ما</div>
+            <div class="linkItem group">
+                <div class="borderbottom"></div>
+                <router-link to="/">ایجاد</router-link>
+            </div>
+            <div class="linkItem group">
+                <div class="borderbottom"></div>
+                <router-link to="/">قرعه کشی ها</router-link>
+            </div>
+            <div class="linkItem group">
+                <div class="borderbottom"></div>
+                <a href="https://github.com/abolfazlj10/shans_aval">گیت هاب</a>
+            </div>
+            <div class="linkItem group">
+                <div class="borderbottom"></div>
+                <router-link to="/">درباره ما</router-link>
+            </div>
         </div>
         <router-link to="/" class="login">ورود</router-link>
     </div>
 </template>
 <style scoped>
 .nav{
-    @apply container flex items-center gap-2 px-5 py-2 border-b ;
+    @apply container flex items-center gap-7 px-5 py-2 border-b max-md:flex-wrap  ;
 }
 .title{
-    @apply w-1/12 text-2xl text-brand;
+    @apply text-2xl text-brand max-md:order-1 max-md:border-b max-md:border-brand max-md:py-2;
 }
 .linkNav{
-    @apply w-10/12 flex gap-12;
+    @apply flex gap-12 max-md:w-full max-md:order-3 max-md:justify-center max-[400px]:gap-7 max-[332px]:gap-3;
 }
 .login{
-    @apply w-1/12 mr-auto text-center bg-brand rounded-md text-white py-2;
+    @apply mr-auto text-center bg-brand rounded-md text-white py-2 px-11 max-md:order-2;
+}
+.linkItem{
+    @apply flex flex-col-reverse gap-[1px];
+}
+.borderbottom{
+    @apply bg-brand w-0 h-[1px] rounded-2xl duration-100 group-hover:w-full;
 }
 </style>
