@@ -19,9 +19,9 @@
                 <router-link to="/">درباره ما</router-link>
             </div>
         </div>
-        <router-link to="/" class="login">
+        <router-link to="/" class="login group">
             <div>ورود</div>
-            <i class="ri-login-box-line text-xl"></i>
+            <i class="ri-login-box-line text-xl duration-75 group-hover:scale-105"></i>
         </router-link>
     </div>
 </template>
