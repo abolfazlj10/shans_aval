@@ -19,12 +19,15 @@
                 <router-link to="/">درباره ما</router-link>
             </div>
         </div>
-        <router-link to="/" class="login">ورود</router-link>
+        <router-link to="/" class="login">
+            <div>ورود</div>
+            <i class="ri-login-box-line text-xl"></i>
+        </router-link>
     </div>
 </template>
 <style scoped>
 .nav{
-    @apply container flex items-center gap-7 px-5 py-2 border-b max-md:flex-wrap  ;
+    @apply container flex items-center gap-7 py-2 border-b max-md:flex-wrap  ;
 }
 .title{
     @apply text-2xl text-brand max-md:order-1 max-md:border-b max-md:border-brand max-md:py-2;
@@ -33,7 +36,7 @@
     @apply flex gap-12 max-md:w-full max-md:order-3 max-md:justify-center max-[400px]:gap-7 max-[332px]:gap-3;
 }
 .login{
-    @apply mr-auto text-center bg-brand rounded-md text-white py-2 px-11 max-md:order-2;
+    @apply flex flex-row-reverse items-center gap-4 mr-auto text-center bg-brand rounded-md text-white py-2 px-8 max-md:order-2;
 }
 .linkItem{
     @apply flex flex-col-reverse gap-[1px];

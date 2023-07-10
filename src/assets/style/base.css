@@ -3,11 +3,11 @@
 @tailwind utilities;
 @font-face {
   font-family: vazir;
-  src: url('./fonts/Vazirmatn-Thin.ttf');
+  src: url('../fonts/Vazirmatn-Thin.ttf');
 }
 @font-face {
   font-family: vazirBold;
-  src: url('./fonts/Vazirmatn-SemiBold.ttf');
+  src: url('../fonts/Vazirmatn-SemiBold.ttf');
 }
 *,
 *::before,
@@ -19,5 +19,4 @@
 body{
   direction: rtl;
   font-family: vazirbold;
-  font-weight: bold;
 }
