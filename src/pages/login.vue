@@ -47,9 +47,9 @@ export default{
                         <div class="text-left">SA</div>
                         <div>شانس اول</div>
                     </div>
-                    <img class="border border-brd w-10" src="../../public/SA.ico" alt="">
+                    <img class="border border-brd w-10" src="../../public/SA.ico">
                 </div>
-                <div class="m-auto"><img src="../assets/img/Art.svg" alt=""></div>
+                <div class="m-auto relative"><img class="absolute right-16 top-14" src="../assets/img/Back.svg"><img class="z-10 relative" src="../assets/img/Art.svg"></div>
                 <div class="text-center text-xl space-y-3">
                     <div>کاربر عزیز  به شانس اول خوش آمدید</div>
                     <div class="text-lg text-white/80">بریم برای ثبت نام و ورود</div>
