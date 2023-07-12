@@ -37,7 +37,7 @@ export default{
                         <div class=" text-gray-500">یا</div>
                         <div class="w-5 h-[1px] bg-brd/50 flex-grow"></div>
                     </div>
-                    <div class="text-sm text-center text-gray-500 cursor-pointer">حساب کاربری ندارید؟</div>
+                    <div class="createAccount">حساب کاربری ندارید؟</div>
                     <div class="registerBtn loginBtn">ثبت نام</div>
                 </div>
             </div>
@@ -49,7 +49,15 @@ export default{
                     </div>
                     <img class="border border-brd w-10" src="../../public/SA.ico">
                 </div>
-                <div class="m-auto relative"><img class="absolute right-16 top-14" src="../assets/img/Back.svg"><img class="z-10 relative" src="../assets/img/Art.svg"></div>
+                <div class="m-auto relative">
+                    <img class="absolute right-16 top-14" src="../assets/img/Back.svg"> 
+                    <img class="z-10 relative" src="../assets/img/Art.svg">
+                    <!-- shape 3D -->
+                    <img class="shape w-20 top-1 left-0" src="../assets/img/shape 3D/Group 2.svg">
+                    <img class="shape w-14 bottom-1 left-[250px]" src="../assets/img/shape 3D/Group 4.svg">
+                    <img class="shape w-28 top-1 left-[300px]" src="../assets/img/shape 3D/Group 6.svg">
+                    <img class="shape w-20 bottom-10 left-[50px]" src="../assets/img/shape 3D/Group 8.svg">
+                </div> 
                 <div class="text-center text-xl space-y-3">
                     <div>کاربر عزیز  به شانس اول خوش آمدید</div>
                     <div class="text-lg text-white/80">بریم برای ثبت نام و ورود</div>
@@ -86,5 +94,24 @@ export default{
 }
 .registerBtn{
     @apply !bg-white !text-brand border border-brand !duration-100 hover:!bg-brand hover:!text-white;
+}
+.createAccount{
+    @apply text-sm text-center text-gray-500 cursor-pointer;
+}
+.shape{
+    @apply absolute;
+    transform: translateY(0);
+    animation: shape 3s ease infinite;
+}
+@keyframes shape {
+    0%{
+        transform: translateY(0);
+    }
+    50%{
+        transform: translateY(3px);
+    }
+    100%{
+        transform: translateY(0);
+    }
 }
 </style>
