@@ -52,11 +52,13 @@ export default{
                 <div class="m-auto relative">
                     <img class="absolute right-16 top-14" src="../assets/img/Back.svg"> 
                     <img class="z-10 relative" src="../assets/img/Art.svg">
-                    <!-- shape 3D -->
-                    <img class="shape w-20 top-1 left-0" src="../assets/img/shape 3D/Group 2.svg">
-                    <img class="shape w-14 bottom-1 left-[250px]" src="../assets/img/shape 3D/Group 4.svg">
-                    <img class="shape w-28 top-1 left-[300px]" src="../assets/img/shape 3D/Group 6.svg">
-                    <img class="shape w-20 bottom-10 left-[50px]" src="../assets/img/shape 3D/Group 8.svg">
+                    <!-- shape radious -->
+                    <div class="shape rounded-3xl w-[25px] h-[25px] left-[90%] top-[0%] bg-[#F86F03]" style="border-radius:0% 100% 0% 100% / 1% 100% 0% 99% ;"></div>
+                    <div class="shape rounded-3xl w-[25px] h-[25px] left-[10%] top-[10%] bg-[#FFF6F4]" style="border-radius:24% 76% 60% 40% / 30% 49% 51% 70% ;"></div>
+                    <div class="shape rounded-3xl w-[25px] h-[25px] left-[0%] top-[30%] bg-[#FFA41B]" style="border-radius:24% 76% 0% 100% / 30% 100% 0% 70% ;"></div>
+                    <div class="shape rounded-3xl w-[25px] h-[25px] left-[20%] top-[90%] bg-[#00DFA2]" style="border-radius:51% 49% 38% 62% / 74% 29% 71% 26% ;"></div>
+                    <div class="shape rounded-3xl w-[25px] h-[25px] left-[75%] top-[90%] bg-[#DB005B]" style="border-radius:100% 0% 36% 64% / 97% 8% 92% 3% ;"></div>
+                    <div class="shape rounded-3xl w-[25px] h-[25px] left-[85%] top-[32%] bg-[#DD58D6]" style="border-radius:44% 56% 88% 12% / 56% 24% 76% 44%  ;"></div>
                 </div> 
                 <div class="text-center text-xl space-y-3">
                     <div>کاربر عزیز  به شانس اول خوش آمدید</div>
