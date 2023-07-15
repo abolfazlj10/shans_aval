@@ -24,9 +24,11 @@ export default{
 </script>
 <template>
     <div class="h-screen flex">
-        <div class="containerLogin">
-            <div class="form">
-                <slot :changer="changeStep"></slot>
+        <div class="containerLogin relative">
+            <img class="torus" src="../../assets/img/torus.svg">
+            <img class="torus2" src="../../assets/img/torus2.svg">
+            <div class="form" ref="form">
+                <slot :changer="changeStep" :parnt="$refs.form"></slot>
             </div>
             <div ref="cover" class="cover">
                 <div class="flex gap-5 justify-end items-center">
@@ -47,13 +49,14 @@ export default{
                     <div class="shape rounded-3xl w-[25px] h-[25px] left-[75%] top-[90%] bg-[#DB005B]" style="border-radius:100% 0% 36% 64% / 97% 8% 92% 3% ;"></div>
                     <div class="shape rounded-3xl w-[25px] h-[25px] left-[85%] top-[32%] bg-[#DD58D6]" style="border-radius:44% 56% 88% 12% / 56% 24% 76% 44%  ;"></div>
                 </div> 
-                <div :style="`width:${wEl * 6}px;transform: translate3d(${wEl*step}px, 0, 0);`" class="texter">
+                <div :style="`width:${wEl * 7}px;transform: translate3d(${wEl*step}px, 0, 0);`" class="texter">
                     <div :style="`width:${wEl}px`">برای ورود باید ایمیل و رمز خود را وارد کنید.</div>
                     <div :style="`width:${wEl}px`">لطفا ایمیل خود را وارد کنید.</div>
                     <div :style="`width:${wEl}px`">رمز شما باید حداقل شامل 8 کارکتر باشد.</div>
                     <div :style="`width:${wEl}px`">برای بازیابی رمز ایمیل خود را وارد کنید.</div>
                     <div :style="`width:${wEl}px`">فیلد ها را کامل کنید.</div>
                     <div :style="`width:${wEl}px`">نام کاربری خود را وارد کنید.</div>
+                    <div :style="`width:${wEl}px`">کد 6 رقمی به ایمیل شما ارسال شد.</div>
                 </div>
             </div>
         </div>
@@ -69,9 +72,10 @@ export default{
     border-bottom-left-radius: 24px;
 }
 .form{
-    @apply flex flex-col justify-evenly items-center bg-white w-5/12 border px-16 py-8;
+    @apply flex flex-col justify-evenly items-center bg-white/50 w-5/12 border px-16 py-8 overflow-hidden;
     border-top-right-radius: 24px;
     border-bottom-right-radius: 24px;
+    backdrop-filter: blur(10px);
 }
 .texter{
     @apply flex items-center text-center whitespace-nowrap text-xl space-y-3 overflow-hidden;
@@ -91,6 +95,25 @@ export default{
     }
     100%{
         transform: translateY(0);
+    }
+}
+.torus{
+    @apply absolute -left-[107px] top-44;
+    animation: shape 3s ease infinite;
+}
+.torus2{
+    @apply absolute right-[107px] -bottom-24 -z-10;
+    animation: T1 3s ease infinite;
+}
+@keyframes T1 {
+    0%{
+        transform: rotate(0);
+    }
+    50%{
+        transform: rotate(-3deg);
+    }
+    100%{
+        transform: rotate(0);
     }
 }
 </style>

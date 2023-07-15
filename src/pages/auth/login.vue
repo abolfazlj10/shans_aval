@@ -16,8 +16,8 @@ export default{
 </script>
 <template>
     <fream v-slot="propsParent">
-        <div class="text-2xl">ورود</div>
-        <form class="w-full flex flex-col gap-5">
+        <div class="flex-grow flex items-center text-2xl">ورود</div>
+        <form class="flex-grow justify-center w-full flex flex-col gap-5">
             <div class="inputs group">
                 <i class="ri-mail-line iconInput"></i>
                 <input required @focus="propsParent.changer(1)" type="email" placeholder="ایمیل" class="inputStyle">
@@ -31,7 +31,7 @@ export default{
             <router-link to="/forgot" class="text-xs text-brand text-left cursor-pointer"><div>رمز عبور خود را فراموش کرده اید؟</div></router-link>
             <button class="loginBtn">ورود</button>
         </form>
-        <div class="w-full flex flex-col gap-5">
+        <div class="flex-grow justify-center w-full flex flex-col gap-5">
             <div class="w-full flex items-center gap-3 px-10">
                 <div class="w-5 h-[1px] bg-brd/50 flex-grow"></div>
                 <div class="text-gray-500">یا</div>

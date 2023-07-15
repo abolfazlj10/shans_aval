@@ -45,7 +45,7 @@ export default{
                 <div class="text-gray-500">یا</div>
                 <div class="w-5 h-[1px] bg-brd/50 flex-grow"></div>
             </div>
-            <div class="createAccount"><router-link to="/register">قبلا حساب کاربری داشتید؟</router-link></div>
+            <div class="createAccount"><router-link to="/login">قبلا حساب کاربری داشتید؟</router-link></div>
             <router-link to="/login"><div class="registerBtn loginBtn">ورود</div></router-link>
         </div>
     </fream>
