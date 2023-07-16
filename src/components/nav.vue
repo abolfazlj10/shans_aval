@@ -1,3 +1,12 @@
+<script>
+export default{
+    data(){
+        return{
+            isLogin:JSON.parse(localStorage.getItem('login_shansAval'))
+        }
+    }
+}
+</script>
 <template>
     <div class="nav">
         <div class="title"><router-link to="/">شانس اول</router-link></div>
@@ -19,7 +28,11 @@
                 <router-link to="/">درباره ما</router-link>
             </div>
         </div>
-        <router-link to="/login" class="login group">
+        <router-link v-if="isLogin" to="/dashboard" class="dashboard group">
+            <div class="text-lg">{{ isLogin.username }}</div>
+            <i class="ri-account-circle-line text-2xl duration-75 group-hover:scale-105 max-sm:text-[18px]"></i>
+        </router-link>
+        <router-link v-else to="/login" class="login group">
             <div>ورود</div>
             <i class="ri-login-box-line text-xl duration-75 group-hover:scale-105 max-sm:text-[18px]"></i>
         </router-link>
@@ -37,6 +50,9 @@
 }
 .login{
     @apply flex flex-row-reverse items-center gap-4 mr-auto text-center bg-brand rounded-md text-white py-2 px-8 max-md:order-2 max-sm:text-xs max-sm:px-6 max-sm:py-1;
+}
+.dashboard{
+    @apply flex flex-row items-center gap-4 mr-auto text-center bg-white text-brand border border-brand rounded-md py-[6px] px-6 duration-75 hover:bg-brand hover:text-white max-md:order-2 max-sm:text-xs max-sm:px-6 max-sm:py-1;
 }
 .linkItem{
     @apply flex flex-col-reverse gap-[1px];
