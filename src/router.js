@@ -18,6 +18,10 @@ const router = createRouter({
     {
       path: '/forgot',
       component: () => import('./pages/auth/forgot.vue')
+    },
+    {
+      path: '/dashboard',
+      component: () => import('./pages/dashboard.vue')
     }
   ]
 })
