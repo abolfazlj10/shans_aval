@@ -3,12 +3,47 @@ import fream from './fream.vue'
 export default{
     data(){
         return{
-            seePass:true
+            seePass:true,
+            username:null,
+            password:null
         }
     },
     methods:{
         focusPass (){
             this.$refs.pass.focus()
+        },
+        async login(){
+            const data = {
+                username:this.username,
+                password:this.password
+            }
+            const url = this.url + '/login'
+            const req = await fetch(url,{
+                method:'POST',
+                headers:{
+                    'Content-Type':'application/json',
+                    'Accept':'applciation/json'
+                },
+                body:JSON.stringify(data)
+            })
+            const res = await req.json()
+            if(!res.succes)
+                alert('خطا')
+            else if(res.status === 'notfound'){
+                alert('این نام کاربری وجود ندارید لطفا اول ثبت نام کنید.')
+                this.$refs.username.focus()
+                this.username = null
+            }else if(res.status === 'verify'){
+                localStorage.setItem('login_shansAval',JSON.stringify({username:this.username}))
+                this.username = null
+                this.password = null
+                alert('ورود با موفقیت انجام شد.')
+                this.$router.push('/')
+            }else if(res.status === 'invalid'){
+                this.password = null
+                this.$refs.pass.focus()
+                alert('رمز نا معتبر است.')
+            }
         }
     },
     components:{fream}
@@ -17,14 +52,14 @@ export default{
 <template>
     <fream v-slot="propsParent">
         <div class="flex-grow flex items-center text-2xl">ورود</div>
-        <form class="flex-grow justify-center w-full flex flex-col gap-5">
+        <form @submit.prevent="login" class="flex-grow justify-center w-full flex flex-col gap-5">
             <div class="inputs group">
-                <i class="ri-mail-line iconInput"></i>
-                <input required @focus="propsParent.changer(1)" type="email" placeholder="ایمیل" class="inputStyle">
+                <i class="ri-user-line iconInput"></i>
+                <input required v-model="username" name="username" ref="username" @focus="propsParent.changer(1)" type="text" placeholder="نام کاربری" class="inputStyle">
             </div>
             <div class="inputs group">
                 <i class="ri-lock-2-line iconInput"></i>
-                <input required @focus="propsParent.changer(2)" minlength="8" ref="pass" :type="seePass ? 'password' : 'text'" placeholder="رمز" class="inputStyle">
+                <input required v-model="password" name="password" @focus="propsParent.changer(2)" minlength="8" ref="pass" :type="seePass ? 'password' : 'text'" placeholder="رمز" class="inputStyle">
                 <i v-if="!seePass" @click="seePass = true;focusPass()" class="ri-eye-line cursor-pointer iconInput"></i>
                 <i v-else @click="seePass = false;focusPass()" class="ri-eye-off-line cursor-pointer iconInput"></i>
             </div>

@@ -4,12 +4,46 @@ export default{
     data(){
         return{
             seePass:true,
-            isShow:false
+            isShow:false,
+            username:null,
+            email:null,
+            password:null
         }
     },
     methods:{
         focusPass (){
             this.$refs.pass.focus()
+        },
+        async register(){
+            const data = {
+                username:this.username,
+                email:this.email,
+                password:this.password
+            }
+            const url = this.url + '/register'
+            const req = await fetch(url,{
+                method:'POST',
+                headers:{
+                    'Content-Type':'application/json',
+                    'Accept':'applciation/json'
+                },
+                body:JSON.stringify(data)
+            })
+            const res = await req.json()
+            if(!res.succes)
+                alert('خطا')
+            else if(res.status === 'rename username'){
+                alert('این نام کاربری از قبل وجود داشته است لطفا نام دیگری را وارد کنید.')
+                this.$refs.username.focus()
+                this.username = null
+            }else{
+                localStorage.setItem('login_shansAval',JSON.stringify({username:this.username}))
+                this.username = null
+                this.email = null
+                this.password = null
+                alert('ثبت نام با موفقیت انجام شد.')
+                this.$router.push('/')
+            }
         }
     },
     mounted(){
@@ -22,18 +56,18 @@ export default{
     <fream v-slot="propsParent">
         {{ !isShow ? propsParent.changer(4) : null }}
         <div class="text-2xl">ثبت نام</div>
-        <form class="w-full flex flex-col gap-5">
+        <form @submit.prevent="register" class="w-full flex flex-col gap-5">
             <div class="inputs group">
                 <i class="ri-user-line iconInput"></i>
-                <input required @focus="propsParent.changer(5)" type="text" placeholder="نام کاربری" class="inputStyle">
+                <input required v-model="username" name="username" @focus="propsParent.changer(5)" ref="username" type="text" placeholder="نام کاربری" class="inputStyle">
             </div>
             <div class="inputs group">
                 <i class="ri-mail-line iconInput"></i>
-                <input required @focus="propsParent.changer(1)" type="email" placeholder="ایمیل" class="inputStyle">
+                <input required v-model="email" name="email" @focus="propsParent.changer(1)" type="email" placeholder="ایمیل" class="inputStyle">
             </div>
             <div class="inputs group">
                 <i class="ri-lock-2-line iconInput"></i>
-                <input required @focus="propsParent.changer(2)" minlength="8" ref="pass" :type="seePass ? 'password' : 'text'" placeholder="رمز" class="inputStyle">
+                <input required v-model="password" name="password" @focus="propsParent.changer(2)" minlength="8" ref="pass" :type="seePass ? 'password' : 'text'" placeholder="رمز" class="inputStyle">
                 <i v-if="!seePass" @click="seePass = true;focusPass()" class="ri-eye-line cursor-pointer iconInput"></i>
                 <i v-else @click="seePass = false;focusPass()" class="ri-eye-off-line cursor-pointer iconInput"></i>
             </div>
