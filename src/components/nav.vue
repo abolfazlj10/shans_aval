@@ -28,7 +28,7 @@ export default{
                 <router-link to="/">درباره ما</router-link>
             </div>
         </div>
-        <router-link v-if="isLogin" to="/dashboard" class="dashboard group">
+        <router-link v-if="isLogin" to="/login" class="dashboard group">
             <div class="text-lg">{{ isLogin.username }}</div>
             <i class="ri-account-circle-line text-2xl duration-75 group-hover:scale-105 max-sm:text-[18px]"></i>
         </router-link>

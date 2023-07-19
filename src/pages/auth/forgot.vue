@@ -125,6 +125,7 @@ export default{
 <style scoped>
 .inputs{
     @apply flex gap-2 border border-brd px-2 py-2 rounded-lg duration-100 focus-within:border-brand;
+    @apply max-[1083px]:py-1 max-[1083px]:px-3;
 }
 .inputStyle{
     @apply w-10/12 outline-none placeholder:text-sm;

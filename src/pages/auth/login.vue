@@ -55,7 +55,7 @@ export default{
         <form @submit.prevent="login" class="flex-grow justify-center w-full flex flex-col gap-5">
             <div class="inputs group">
                 <i class="ri-user-line iconInput"></i>
-                <input required v-model="username" name="username" ref="username" @focus="propsParent.changer(1)" type="text" placeholder="نام کاربری" class="inputStyle">
+                <input required v-model="username" name="username" ref="username" @focus="propsParent.changer(5)" type="text" placeholder="نام کاربری" class="inputStyle">
             </div>
             <div class="inputs group">
                 <i class="ri-lock-2-line iconInput"></i>
@@ -80,6 +80,7 @@ export default{
 <style scoped>
 .inputs{
     @apply flex gap-2 border border-brd px-2 py-2 rounded-lg duration-100 focus-within:border-brand;
+    @apply max-[1083px]:py-1 max-[1083px]:px-3;
 }
 .inputStyle{
     @apply w-10/12 outline-none placeholder:text-sm;
