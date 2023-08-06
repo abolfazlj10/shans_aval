@@ -34,7 +34,7 @@ export default{
                 this.$refs.username.focus()
                 this.username = null
             }else if(res.status === 'verify'){
-                localStorage.setItem('login_shansAval',JSON.stringify({username:this.username}))
+                // localStorage.setItem('login_shansAval',JSON.stringify({username:this.username}))
                 this.username = null
                 this.password = null
                 alert('ورود با موفقیت انجام شد.')

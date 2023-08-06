@@ -25,8 +25,9 @@ export default{
                 method:'POST',
                 headers:{
                     'Content-Type':'application/json',
-                    'Accept':'applciation/json'
+                    'Accept':'applciation/json',
                 },
+                credentials:'include',
                 body:JSON.stringify(data)
             })
             const res = await req.json()
@@ -41,7 +42,7 @@ export default{
                 this.$refs.username.focus()
                 this.username = null
             }else{
-                localStorage.setItem('login_shansAval',JSON.stringify({username:this.username}))
+                // localStorage.setItem('login_shansAval',JSON.stringify({username:this.username}))
                 this.username = null
                 this.email = null
                 this.password = null
