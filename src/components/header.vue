@@ -16,10 +16,14 @@ export default{
     methods:{
         changeWord(){
             setInterval(() => {
-                this.$refs.text.style.maxWidth = '0%'
+                try{
+                    this.$refs.text.style.maxWidth = '0%'
+                }catch{}
                 setTimeout(() => {
                     this.word++
-                    this.$refs.text.style.maxWidth = '100%'
+                    try {
+                        this.$refs.text.style.maxWidth = '100%'
+                    } catch{}
                     if(this.word == this.words.length)
                     this.word = 0
                 }, 1500);
