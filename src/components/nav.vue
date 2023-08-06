@@ -2,8 +2,21 @@
 export default{
     data(){
         return{
-            isLogin:JSON.parse(localStorage.getItem('login_shansAval'))
+            isLogin:false
         }
+    },
+    methods:{
+        async auth(){
+            const url = this.url + '/auth'
+            const req = await fetch(url,{
+                credentials:'include'
+            })
+            const res = await req.json()
+            this.isLogin = res
+        }
+    },
+    created(){
+        this.auth()
     }
 }
 </script>
@@ -28,8 +41,8 @@ export default{
                 <router-link to="/">درباره ما</router-link>
             </div>
         </div>
-        <router-link v-if="isLogin" to="/login" class="dashboard group">
-            <div class="text-lg">{{ isLogin.username }}</div>
+        <router-link v-if="isLogin.status" to="/dashboard" class="dashboard group">
+            <div class="text-lg">{{ isLogin.data.username }}</div>
             <i class="ri-account-circle-line text-2xl duration-75 group-hover:scale-105 max-sm:text-[18px]"></i>
         </router-link>
         <router-link v-else to="/login" class="login group">

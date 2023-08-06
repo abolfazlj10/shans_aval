@@ -8,7 +8,7 @@ export default{
             widthForm:0,
             isShow:false,
             step:0,
-            email:'abolfazljamshidi101010@gmail.com',
+            email:null,
             code:null,
             password:null
         }
@@ -42,6 +42,7 @@ export default{
                     'Content-Type':'application/json',
                     'Accept':'application/json'
                 },
+                credentials:'include',
                 body:JSON.stringify(data)
             })
             const res = await req.json()

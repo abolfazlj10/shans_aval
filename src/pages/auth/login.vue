@@ -24,6 +24,7 @@ export default{
                     'Content-Type':'application/json',
                     'Accept':'applciation/json'
                 },
+                credentials:'include',
                 body:JSON.stringify(data)
             })
             const res = await req.json()
