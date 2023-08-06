@@ -1,8 +1,13 @@
 <script>
+import {useStore}  from '../store';
 import navbar from '../components/nav.vue';
 import getStarted from '../components/header.vue';
 export default{
-    components:{navbar,getStarted}
+    setup(){
+        const store = useStore()
+        console.log(store.esmesh);
+    },
+    components:{navbar,getStarted},
 }
 </script>
 <template>
