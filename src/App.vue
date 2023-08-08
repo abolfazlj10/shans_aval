@@ -2,6 +2,7 @@
 import { RouterView } from 'vue-router'
 import alert from './components/alert.vue';
 import { provide, ref } from 'vue';
+import Loader from './components/loader.vue';
 export default{
   setup(){
     let alertStatus = ref(false)
@@ -12,17 +13,25 @@ export default{
         data.value = objData
       }
     }
+    let statusLoad = ref(false)
+    function Load (status){
+      statusLoad.value = status
+    }
     provide('isAlert',isAlert)
+    provide('Load' , Load)
     return{
-      alertStatus,data
+      alertStatus,data,statusLoad
     }
   },
-  components:{alert}
+  components:{ alert, Loader }
 }
 </script>
 <template>
   <transition name="slide-fade" apper mode="out-in">
     <alert v-if="alertStatus" :data="data"/>
+  </transition>
+  <transition name="slide-fade" apper mode="out-in">
+    <Loader v-if="statusLoad"/>
   </transition>
   <RouterView />
 </template>

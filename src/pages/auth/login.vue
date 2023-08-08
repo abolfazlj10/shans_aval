@@ -4,8 +4,9 @@ import fream from './fream.vue'
 export default{
     setup(){
         let isAlert = inject('isAlert')
+        let Load = inject('Load')
         return{
-            isAlert
+            isAlert,Load
         }
     },
     data(){
@@ -20,6 +21,7 @@ export default{
             this.$refs.pass.focus()
         },
         async login(){
+            this.Load(true)
             const data = {
                 username:this.username,
                 password:this.password
@@ -35,6 +37,7 @@ export default{
                 body:JSON.stringify(data)
             })
             const res = await req.json()
+            this.Load(false)
             if(!res.succes)
                 this.isAlert(true,{
                     icon:'error',
