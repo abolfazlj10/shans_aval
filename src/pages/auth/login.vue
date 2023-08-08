@@ -1,6 +1,13 @@
 <script>
+import { inject } from 'vue'
 import fream from './fream.vue'
 export default{
+    setup(){
+        let isAlert = inject('isAlert')
+        return{
+            isAlert
+        }
+    },
     data(){
         return{
             seePass:true,
@@ -29,23 +36,38 @@ export default{
             })
             const res = await req.json()
             if(!res.succes)
-                alert('خطا')
+                this.isAlert(true,{
+                    icon:'error',
+                    title:'تلاش ناموفق',
+                    description:'خطا'
+                })
             else if(res.status === 'notfound'){
-                alert('این نام کاربری وجود ندارید لطفا اول ثبت نام کنید.')
+                this.isAlert(true,{
+                    icon:'error',
+                    title:'تلاش ناموفق',
+                    description:'حساب کاربری با این نام کاربری وجود ندارد.'
+                })
                 this.$refs.username.focus()
                 this.username = null
             }else if(res.status === 'verify'){
-                // localStorage.setItem('login_shansAval',JSON.stringify({username:this.username}))
                 this.username = null
                 this.password = null
-                alert('ورود با موفقیت انجام شد.')
+                this.isAlert(true,{
+                    icon:'succes',
+                    title:'ورود موفقیت آمیز',
+                    description:'ورود شما با موفقیت به شانس اول تایید شد.'
+                })
                 this.$router.push('/')
             }else if(res.status === 'invalid'){
                 this.password = null
                 this.$refs.pass.focus()
-                alert('رمز نا معتبر است.')
+                this.isAlert(true,{
+                    icon:'error',
+                    title:'تلاش ناموفق',
+                    description:'رمز شما معتبر نیست دوباره تلاش کنید'
+                })
             }
-        }
+        },
     },
     components:{fream}
 }
@@ -61,8 +83,8 @@ export default{
             <div class="inputs group">
                 <i class="ri-lock-2-line iconInput"></i>
                 <input required v-model="password" name="password" @focus="propsParent.changer(2)" minlength="8" ref="pass" :type="seePass ? 'password' : 'text'" placeholder="رمز" class="inputStyle">
-                <i v-if="!seePass" @click="seePass = true;focusPass()" class="ri-eye-line cursor-pointer iconInput"></i>
-                <i v-else @click="seePass = false;focusPass()" class="ri-eye-off-line cursor-pointer iconInput"></i>
+                <i v-if="seePass" @click="seePass = false;focusPass()" class="ri-eye-line cursor-pointer iconInput"></i>
+                <i v-else @click="seePass = true;focusPass()" class="ri-eye-off-line cursor-pointer iconInput"></i>
             </div>
             <router-link to="/forgot" class="text-xs text-brand text-left cursor-pointer"><div>رمز عبور خود را فراموش کرده اید؟</div></router-link>
             <button class="loginBtn">ورود</button>

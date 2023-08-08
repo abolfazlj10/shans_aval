@@ -1,6 +1,11 @@
 <script>
+import { inject } from 'vue'
 import fream from './fream.vue'
 export default{
+    setup(){
+        let isAlert = inject('isAlert')
+        return{isAlert}
+    },
     data(){
         return{
             seePass:true,
@@ -32,21 +37,36 @@ export default{
             })
             const res = await req.json()
             if(!res.succes)
-                alert('خطا')
+                this.isAlert(true,{
+                    icon:'error',
+                    title:'تلاش ناموفق',
+                    description:'خطا'
+                })
             else if(res.status === 'rename username'){
-                alert('این نام کاربری از قبل وجود داشته است لطفا نام دیگری را وارد کنید.')
                 this.$refs.username.focus()
                 this.username = null
+                this.isAlert(true,{
+                    icon:'error',
+                    title:'نام کاربری مشابه',
+                    description:'این نام کاربری از قبل وجود داشته است لطفا نام دیگری را وارد کنید.'
+                })
             }else if(res.status === 'rename email'){
-                alert('این ایمیل از قبل وجود داشته است لطفا ایمیل دیگری را وارد کنید.')
                 this.$refs.username.focus()
                 this.username = null
+                this.isAlert(true,{
+                    icon:'error',
+                    title:'ایمیل مشابه',
+                    description:'این ایمیل از قبل وجود داشته است لطفا ایمیل دیگری را وارد کنید.'
+                })
             }else{
-                // localStorage.setItem('login_shansAval',JSON.stringify({username:this.username}))
                 this.username = null
                 this.email = null
                 this.password = null
-                alert('ثبت نام با موفقیت انجام شد.')
+                this.isAlert(true,{
+                    icon:'succes',
+                    title:'ثبت نام موفقیت آمیز',
+                    description:'حساب کاربری شما با موفقیت در شانس اول ایجاد شد.'
+                })
                 this.$router.push('/')
             }
         }

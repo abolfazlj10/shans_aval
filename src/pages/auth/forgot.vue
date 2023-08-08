@@ -1,6 +1,11 @@
 <script>
+import { inject } from 'vue'
 import fream from './fream.vue'
 export default{
+    setup(){
+        let isAlert = inject('isAlert')
+        return{isAlert}
+    },
     data(){
         return{
             seePass:true,
@@ -34,7 +39,6 @@ export default{
                 code:this.code,
                 pass:this.password
             }
-
             const url = this.url + '/forgotPass'
             const req = await fetch(url,{
                 method:'POST',
@@ -47,28 +51,43 @@ export default{
             })
             const res = await req.json()
             if(!res.succes)
-                alert('خطا')
+                this.isAlert(true,{
+                    icon:'error',
+                    title:'تلاش ناموفق',
+                    description:'خطا'
+                })
             else if(res.status == 'existsEmail')
-                alert('کاربری با این ایمیل وجود ندارد لطفا ایمیل معتبری وارد کنید.')
+                this.isAlert(true,{
+                    icon:'error',
+                    title:'تلاش ناموفق',
+                    description:'کاربری با این این ایمیل یافت نشد لطفا ایمیل معتبری وارد کنید'
+                })
             else if(res.status == 'sendCode'){
                 this.step = 1
-                setTimeout(() => {
-                    this.$refs.code.focus()
-                }, 200);
+                this.isAlert(true,{
+                    icon:'sendMail',
+                    title:'دریافت کد',
+                    description:'کد شش رقمی ارسال شده را وارد کنید.'
+                })
             }else if(res.status == 'validCode'){
                 this.step = 2
-                setTimeout(() => {
-                    this.$refs.pass.focus()
-                }, 200);
             }else if(res.status == 'invalidCode'){
-                alert('کد وارد شده اشتباه است.')
                 this.code = null
+                this.isAlert(true,{
+                    icon:'error',
+                    title:'کد نامعتبر',
+                    description:'کد وارد شده نامعتبر است دوباره تلاش کنید.'
+                })
             }else if(res.status == 'succes'){
-                alert('رمز با موفقیت تغییر کرد.')
                 this.step = 0
                 this.email = null
                 this.password = null
                 this.code = null
+                this.isAlert(true,{
+                    icon:'succes',
+                    title:' موفقیت آمیز',
+                    description:'رمز حساب کاربری شما با موفقیت تغییر کرد.'
+                })
                 this.$router.push('/')
             }            
         }
