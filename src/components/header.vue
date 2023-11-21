@@ -48,10 +48,10 @@ export default{
                         <div title="راهنمای شانس اول">راهنما</div>
                         <i class="ri-file-list-2-fill icon"></i>
                     </button>
-                    <button class="btnAdd group">
+                    <router-link to="/New" class="btnAdd group">
                         <div title="ایجاد قرعه کشی">ایجاد</div>
                         <i class="ri-add-box-fill icon"></i>
-                    </button>
+                    </router-link>
                     
                 </div>
             </div>

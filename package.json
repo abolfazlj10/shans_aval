@@ -8,6 +8,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "num2persian": "^3.2.2",
     "remixicon": "^3.4.0",
     "vue": "^3.3.4",
     "vue-router": "^4.2.2"

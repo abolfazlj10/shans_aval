@@ -38,7 +38,11 @@ const router = createRouter({
         else
           next('/login')
       }
-    }
+    },
+    {
+      path: '/New',
+      component: () => import('./pages/new.vue')
+    },
   ]
 })
 
