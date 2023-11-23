@@ -132,11 +132,11 @@ export default{
                 <Transition name="slide-fade">
                     <div v-if="level == 1" class="slide1">
                         <div class="itemGetstarted">
-                            <div>من میخواهم یک قرعه کشی جدید را برگزار کنم</div>
+                            <div>من میخواهم یک قرعه کشی جدید را ایجاد کنم</div>
                             <input class="cursor-pointer" checked type="radio" name="test">
                         </div>
                         <div class="itemGetstarted">
-                            <div>قرعه کشی من در حال اجرا است ولی میخواهم آن را به صورت نوین و با پلتفرم شانس اول ادامه بدهم</div>
+                            <div>قرعه کشی من در حال اجرا است ولی میخواهم آن را به صورت نوین و با پلتفرم شانس اول مدیریت کنم</div>
                             <input class="cursor-pointer" type="radio" name="test">
                         </div>
                     </div>
