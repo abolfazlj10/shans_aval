@@ -128,7 +128,7 @@ export default{
 </script>
 <template>
     <div class="containerMain">
-        <div style="background-image: url(../../public/BG.png);" class="bg-cover">1</div>
+        <div style="background-image: url(../../public/backgNew.png);" class="bg-cover">1</div>
         <div class="containerSlides">
             <div class="titleSlided">
                 <div>
