@@ -128,7 +128,7 @@ export default{
 </script>
 <template>
     <div class="containerMain">
-        <div style="background-image: url(../../public/BG\ 12.png);" class="bg-cover">1</div>
+        <div style="background-image: url(../../public/BG.png);" class="bg-cover">1</div>
         <div class="containerSlides">
             <div class="titleSlided">
                 <div>
@@ -153,14 +153,14 @@ export default{
                         <div>
                             <div class="containerInputs">
                                 <div class="labelInput">نام قرعه کشی:</div>
-                                <input :class="notValid.includes(1) && '!border-red-500'" v-model="nameMain" class="inps text-center sizeInp" @input="notValid.includes(1) && validatData()" placeholder="مثال : خانگی" @keyup.enter="$refs.phone1.focus()" ref="nameMain" type="text" maxlength="40">
+                                <input :class="notValid.includes(1) && '!border-red-500'" v-model="nameMain" class="inps text-center sizeInp widthFull900px" @input="notValid.includes(1) && validatData()" placeholder="مثال : خانگی" @keyup.enter="$refs.phone1.focus()" ref="nameMain" type="text" maxlength="40">
                                 <div v-if="notValid.includes(1)" class="fildErr">فیلد بالا را پر کنید.</div>
                             </div>
                         </div>
                         <div class="twoInpt">
                             <div class="containerInputs">
                                 <div class="labelInput">شماره تماس:</div>
-                                <div :class="(notValid.includes(2) || notValid.includes(3)) ? '!border-red-500' : 'focus-within:!border-white'" class="inps w-52 grid grid-cols-3 " dir="ltr">
+                                <div :class="(notValid.includes(2) || notValid.includes(3)) ? '!border-red-500' : 'focus-within:!border-white'" class="inps widthFull900px w-52 grid grid-cols-3 " dir="ltr">
                                     <input type="text" v-model="numPhone.phone1" ref="phone1" @input="$event.target.value.length == 4 && $refs.phone2.focus() ; (notValid.includes(2) || notValid.includes(3)) && validatData();" class="inps phoneInp" placeholder="09××">
                                     <input type="text" v-model="numPhone.phone2" ref="phone2" @input="$event.target.value.length == 3 && $refs.phone3.focus() ; (notValid.includes(2) || notValid.includes(3)) && validatData();" @keydown.backspace="$event.target.value == '' && $refs.phone1.focus()" class="inps phoneInp" placeholder="×××">
                                     <input type="text" v-model="numPhone.phone3" ref="phone3" @input="$event.target.value.length == 4 && $refs.managerInp.focus() ; (notValid.includes(2) || notValid.includes(3)) && validatData();" @keydown.backspace="$event.target.value == '' && $refs.phone2.focus()" class="inps phoneInp" placeholder="××××">
@@ -169,14 +169,14 @@ export default{
                             </div>
                             <div class="containerInputs">
                                 <div class="labelInput">نام مدیر قرعه کشی:</div>
-                                <input type="text" v-model="nameManager" :class="notValid.includes(4) && '!border-red-500'" ref="managerInp" @input="notValid.includes(4) && validatData()" class="inps h-min" @keyup.enter="$refs.card1.focus()" placeholder="مثال : ابوالفضل جمشیدی" maxlength="40">
+                                <input type="text" v-model="nameManager" :class="notValid.includes(4) && '!border-red-500'" ref="managerInp" @input="notValid.includes(4) && validatData()" class="inps widthFull900px h-min" @keyup.enter="$refs.card1.focus()" placeholder="مثال : ابوالفضل جمشیدی" maxlength="40">
                                 <div v-if="notValid.includes(4)" class="fildErr">فیلد بالا را پر کنید.</div>
                             </div>
                         </div>
                         <div class="twoInpt">
                             <div class="containerInputs">
                                 <div class="labelInput">شماره کارت:</div>
-                                <div :class="notValid.includes(5) ? '!border-red-500' : 'focus-within:!border-white'" class="inps w-52 grid grid-cols-4" dir="ltr">
+                                <div :class="notValid.includes(5) ? '!border-red-500' : 'focus-within:!border-white'" class="inps widthFull900px w-52 grid grid-cols-4" dir="ltr">
                                     <input type="text" v-model="numCard.card1" ref="card1" @input="$event.target.value.length == 4 && $refs.card2.focus();notValid.includes(5) && validatData(); beforeNumCard()" class="inps phoneInp" placeholder="××××">
                                     <input type="text" v-model="numCard.card2" ref="card2" @input="$event.target.value.length == 4 && $refs.card3.focus();notValid.includes(5) && validatData(); beforeNumCard()" @keydown.backspace="$event.target.value == '' && $refs.card1.focus()" class="inps phoneInp" placeholder="××××">
                                     <input type="text" v-model="numCard.card3" ref="card3" @input="$event.target.value.length == 4 && $refs.card4.focus();notValid.includes(5) && validatData(); beforeNumCard()" @keydown.backspace="$event.target.value == '' && $refs.card2.focus()" class="inps phoneInp" placeholder="××××">
@@ -188,14 +188,14 @@ export default{
                             </div>
                             <div class="containerInputs">
                                 <div class="labelInput">نام مالک کارت:</div>
-                                <input type="text" v-model="managerCard" :class="notValid.includes(6) ? '!border-red-500' : 'focus-within:!border-white'" ref="managerCard" @input="notValid.includes(6) && validatData()" class="inps h-min" @keyup.enter="$refs.lengthUsers.focus()" maxlength="40" placeholder="مثال : ابوالفضل جمشیدی">
+                                <input type="text" v-model="managerCard" :class="notValid.includes(6) ? '!border-red-500' : 'focus-within:!border-white'" ref="managerCard" @input="notValid.includes(6) && validatData()" class="inps widthFull900px h-min" @keyup.enter="$refs.lengthUsers.focus()" maxlength="40" placeholder="مثال : ابوالفضل جمشیدی">
                                 <div v-if="notValid.includes(6)" class="fildErr">فیلد بالا را پر کنید.</div>
                             </div>
                         </div>
                         <div class="twoInpt">
                             <div class="containerInputs !w-full">
                                 <div class="labelInput w-full">تعدا شرکت کنندگان:</div>
-                                <input type="number" :class="(notValid.includes(9) || notValid.includes(7) || notValid.includes(12)) ? '!border-red-500' : 'focus-within:!border-white'" v-model="people" ref="lengthUsers" @input="(notValid.includes(9) || notValid.includes(7) || notValid.includes(12)) && validatData()" @keyup.enter="$refs.priceAll.focus()" min="0" max="99" maxlength="2" class="inps h-min w-full" placeholder="بین 1 تا 99">
+                                <input type="number" :class="(notValid.includes(9) || notValid.includes(7) || notValid.includes(12)) ? '!border-red-500' : 'focus-within:!border-white'" v-model="people" ref="lengthUsers" @input="(notValid.includes(9) || notValid.includes(7) || notValid.includes(12)) && validatData()" @keyup.enter="$refs.priceAll.focus()" min="0" max="99" maxlength="2" class="inps widthFull900px h-min w-full" placeholder="بین 1 تا 99">
                                 <div v-if="notValid.includes(9)" class="fildErr">فیلد بالا را پر کنید.</div>
                                 <div v-else-if="notValid.includes(7)" class="fildErr">معتبر نمی باشد.</div>
                                 <div v-else-if="notValid.includes(12)" class="fildErr">عدد ورودی باید بین 1 تا 99 باشد.</div>
@@ -203,7 +203,7 @@ export default{
                             </div>
                             <div class="containerInputs">
                                 <div class="labelInput">مبلغ قرعه کشی:</div>
-                                <input type="text" v-model="price" :class="(notValid.includes(10) || notValid.includes(8)) ? '!border-red-500' : 'focus-within:!border-white'" @input=" (notValid.includes(8) || notValid.includes(10))  && validatData();convertPriceToChar($event);" @keyup.enter="$refs.date.focus()" ref="priceAll" maxlength="12" class="inps h-min" placeholder="مثال : 20000">
+                                <input type="text" v-model="price" :class="(notValid.includes(10) || notValid.includes(8)) ? '!border-red-500' : 'focus-within:!border-white'" @input=" (notValid.includes(8) || notValid.includes(10))  && validatData();convertPriceToChar($event);" @keyup.enter="$refs.date.focus()" ref="priceAll" maxlength="12" class="inps widthFull900px h-min" placeholder="مثال : 20000">
                                 <div v-if="notValid.includes(10)" class="fildErr">فیلد بالا را پر کنید.</div>
                                 <div v-else-if="notValid.includes(8)" class="fildErr">معتبر نمی باشد.</div>
                                 <div v-else class="fildErr !text-green-400">{{ priceChar }}</div>
@@ -212,7 +212,7 @@ export default{
                         <div>
                             <div class="containerInputs">
                                 <div class="labelInput">تاریخ قرعه کشی :</div>
-                                <input type="number" :class="(notValid.includes(11) || notValid.includes(13)) ? '!border-red-500' : 'focus-within:!border-white'" v-model="date" ref="date" @input="(notValid.includes(11) || notValid.includes(13)) && validatData()" @keyup.enter="$refs.description.focus()" class="inps w-full text-center sizeInp" min="0" max="29" placeholder="بین 1 تا 29">
+                                <input type="number" :class="(notValid.includes(11) || notValid.includes(13)) ? '!border-red-500' : 'focus-within:!border-white'" v-model="date" ref="date" @input="(notValid.includes(11) || notValid.includes(13)) && validatData()" @keyup.enter="$refs.description.focus()" class="inps widthFull900px w-full text-center sizeInp" min="0" max="29" placeholder="بین 1 تا 29">
                                 <div v-if="notValid.includes(11)" class="fildErr">فیلد بالا را پر کنید.</div>
                                 <div v-else-if="notValid.includes(13)" class="fildErr">عدد ورودی باید بین 1 تا 29 باشد.</div>
                                 <div v-else-if="date" class="fildErr !text-green-400">{{ date }} ام</div>
@@ -221,7 +221,7 @@ export default{
                         <div>
                             <div class="containerInputs !w-auto">
                                 <div class="labelInput">توضیحات:</div>
-                                <textarea ref="description" v-model="description" class="inps w-full resize-none" placeholder="مثال : قوانین و نکته های قرعه کشی"></textarea>
+                                <textarea ref="description" v-model="description" class="inps widthFull900px w-full resize-none" placeholder="مثال : قوانین و نکته های قرعه کشی"></textarea>
                             </div>
                         </div>
                     </div>
@@ -229,16 +229,16 @@ export default{
                         <div v-for="i in people" class="grid grid-rows-[1fr_20px] gap-1">
                             <div :class="activeUser == i && '!opacity-100'" @click="activeUser = i" class="userBox">
                                 <div class="idPic">
-                                    <div class="flex-grow"><img class="w-10" src="../../public/User 05c.png" alt=""></div>
+                                    <div class="flex-grow"><img class="w-10" src="../../public/User.png" alt=""></div>
                                     <div class="flex-grow text-2xl">{{ i }}</div>
                                 </div>    
                                 <div class="dataInfoUser">
                                     <i class="ri-user-6-line"></i>
-                                    <input type="text" :id="`name_${i}`" @keydown.enter="unblueInpPhone(i)" class="w-28 h-2 text-xs placeholder:text-xs inps" placeholder="نام">
+                                    <input type="text" :id="`name_${i}`" @keydown.enter="unblueInpPhone(i)" class="w-full h-2 text-xs placeholder:text-xs inps" placeholder="نام">
                                 </div>                            
                                 <div class="dataInfoUser">
                                     <i class="ri-phone-line"></i>
-                                    <input type="text" :id="`phone_${i}`" @keydown.enter="i+1 <= people && unblueInpName(i+1)" class="w-28 h-2 text-xs placeholder:text-xs inps" placeholder="شماره تماس">
+                                    <input type="text" :id="`phone_${i}`" @keydown.enter="i+1 <= people && unblueInpName(i+1)" class="w-full h-2 text-xs placeholder:text-xs inps" placeholder="شماره تماس">
                                 </div>  
                                 <div v-if="!normalLottery" class="dataInfoUser">
                                     <input type="checkbox">
@@ -270,10 +270,10 @@ export default{
 </template>
 <style scoped>
 .containerMain{
-    @apply text-white max-h-screen grid grid-cols-2 gap-3;
+    @apply text-white max-h-screen grid grid-cols-2 gap-3 max-[600px]:grid-cols-none max-[600px]:gap-0 max-[600px]:grid-rows-[100px_1fr] max-[600px]:h-screen;
 }
 .containerSlides{
-    @apply bg-brand p-2 max-h-screen min-h-screen grid grid-rows-[auto_1fr_auto];
+    @apply bg-brand p-2 max-h-screen min-h-screen grid grid-rows-[auto_1fr_auto] max-[600px]:rounded-t-[50px] max-[600px]:max-h-screen max-[600px]:min-h-0 max-[600px]:-mt-10;
 }
 .slider{
     @apply flex-grow flex items-center justify-center overflow-y-auto mb-3;
@@ -295,13 +295,13 @@ export default{
   opacity: 0;
 }
 .containerInputs{
-    @apply w-fit m-auto grid grid-rows-[auto_1fr_5px];
+    @apply w-fit m-auto grid grid-rows-[auto_1fr_5px] max-[900px]:w-full;
 }
 .labelInput{
     @apply text-right mr-2 bg-brand -mb-3 z-20 relative w-fit px-1;
 }
 .inps{
-    @apply bg-inherit border duration-200 pl-5 pr-3 py-3 rounded-lg border-white/50 outline-none placeholder:text-white/70 focus:placeholder:text-white/80;
+    @apply bg-inherit border duration-200 pl-5 pr-3 py-3 rounded-lg border-white/50 outline-none placeholder:text-white/70 focus:placeholder:text-white/80 max-[600px]:placeholder:text-xs;
 }
 .phoneInp{
     border: none;
@@ -312,13 +312,13 @@ export default{
     @apply px-4 duration-200 select-none;
 }
 .slide1{
-    @apply flex flex-col gap-3;
+    @apply flex flex-col gap-3 max-[1300px]:gap-7 max-[900px]:text-sm;
 }
 .slide2{
-    @apply text-sm text-center grid grid-rows-6 mb-auto gap-2;
+    @apply text-sm text-center grid grid-rows-6 mb-auto gap-2 max-[900px]:grid-rows-none max-[900px]:w-full max-[900px]:px-10 max-[900px]:gap-4 max-[600px]:grid-rows-6 max-[600px]:mx-10 max-[500px]:mx-5 max-[400px]:grid-rows-none;
 }
 .slide3{
-    @apply flex-grow h-full grid grid-cols-5 auto-rows-min gap-3 px-3 items-start;
+    @apply flex-grow h-full grid grid-cols-5 auto-rows-min gap-3 px-3 items-start max-[1760px]:grid-cols-4 max-[1760px]:gap-1 max-[1760px]:gap-x-5 max-[1400px]:grid-cols-3 max-[1100px]:grid-cols-2 max-[700px]:grid-cols-1 max-[700px]:px-10 max-[600px]:grid-cols-2 max-[400px]:grid-cols-1;
 }
 .itemGetstarted{
     @apply flex flex-row-reverse justify-end gap-3;
@@ -336,7 +336,7 @@ export default{
     @apply w-14 border border-white/50;
 }
 .containerNavigator{
-    @apply bg-white/90 text-brand py-2 px-3 flex rounded justify-between items-center;
+    @apply bg-white/90 text-brand py-2 px-3 flex rounded justify-between items-center max-[900px]:text-sm;
 }
 .btnNav{
     @apply flex cursor-pointer select-none;
@@ -345,21 +345,24 @@ export default{
     @apply bg-brand text-white rounded;
 }
 .fildErr{
-    @apply text-xs text-red-500 mt-2 text-right mr-3;
+    @apply text-xs text-red-500 mt-2 text-right mr-3 max-[1760px]:mt-0;
 }
 .twoInpt{
-    @apply grid grid-cols-2 gap-4;
+    @apply grid grid-cols-2 gap-4 max-[900px]:grid-cols-1 max-[600px]:grid-cols-2 max-[400px]:grid-cols-1;
 }
 .sizeInp{
     @apply w-48
 }
 .userBox{
-    @apply text-sm border border-white/50 px-3 py-2 rounded-md flex flex-col gap-4 opacity-50 duration-100;
+    @apply text-sm border border-white/50 px-3 py-2 rounded-md flex flex-col gap-4 opacity-50 duration-100 ;
 }
 .idPic{
     @apply flex items-center;
 }
 .dataInfoUser{
     @apply flex gap-2 items-center;
+}
+.widthFull900px{
+    @apply max-[900px]:w-full;
 }
 </style>
