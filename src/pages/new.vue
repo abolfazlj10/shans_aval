@@ -44,7 +44,7 @@ export default{
             description:null,
             activeUser:1,
             emptyUser:[],
-            newLottery:false,
+            normalLottery:true,
         }
     },
     methods:{
@@ -142,11 +142,11 @@ export default{
                     <div v-if="level == 1" class="slide1">
                         <div class="itemGetstarted">
                             <div>من میخواهم یک قرعه کشی جدید را ایجاد کنم</div>
-                            <input class="cursor-pointer" checked type="radio" name="test">
+                            <input class="cursor-pointer" @click="normalLottery = true" :checked="normalLottery" type="radio" name="test">
                         </div>
                         <div class="itemGetstarted">
                             <div>قرعه کشی من در حال اجرا است ولی میخواهم آن را به صورت نوین و با پلتفرم شانس اول مدیریت کنم</div>
-                            <input class="cursor-pointer" type="radio" name="test">
+                            <input class="cursor-pointer" @click="normalLottery = false" :checked="!normalLottery"  type="radio" name="test">
                         </div>
                     </div>
                     <div v-else-if="level == 2" class="slide2">
@@ -239,6 +239,10 @@ export default{
                                 <div class="dataInfoUser">
                                     <i class="ri-phone-line"></i>
                                     <input type="text" :id="`phone_${i}`" @keydown.enter="i+1 <= people && unblueInpName(i+1)" class="w-28 h-2 text-xs placeholder:text-xs inps" placeholder="شماره تماس">
+                                </div>  
+                                <div v-if="!normalLottery" class="dataInfoUser">
+                                    <input type="checkbox">
+                                    <div class="text-xs mr-1">قبلا برنده شده است.</div>
                                 </div>  
                             </div>
                             <div v-if="emptyUser.includes('user_'+i)" class="fildErr">فیلد های بالا را کامل کنید.</div>                          
