@@ -43,7 +43,8 @@ export default{
             date:null,
             description:null,
             activeUser:1,
-            emptyUser:[]
+            emptyUser:[],
+            newLottery:false,
         }
     },
     methods:{
@@ -113,6 +114,14 @@ export default{
                 if(elName == '' || elPhone == '')
                     this.emptyUser.push('user_'+i)
             }
+        },
+        btnNext(){
+            if(this.level == 3)
+                this.checkUsers
+            else 
+                this.validatData()
+            this.notValid.length == 0 && this.level++
+            
         }
     }
 }
@@ -238,7 +247,7 @@ export default{
                 </Transition>
             </div>
             <div class="containerNavigator">
-                <div @click=" level != 3 ? validatData() : checkUsers() ; notValid.length == 0 && level++" class="btnNav group">
+                <div @click="btnNext" class="btnNav group">
                     <div class="group-hover:scale-125"><i class="ri-arrow-right-s-line"></i></div>
                     <div>بعدی</div>
                 </div>
