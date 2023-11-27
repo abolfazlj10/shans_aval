@@ -185,7 +185,7 @@ export default{
 }
 </script>
 <template>
-    <div class="containerMain">
+    <div class="containerMain !overflow-y-hidden">
         <div style="background-image: url(../../public/backgNew.png);" class="bg-cover">1</div>
         <div class="containerSlides">
             <div class="titleSlided">
@@ -327,6 +327,22 @@ export default{
     </div>
 </template>
 <style scoped>
+.slide-fade-enter-active {
+  transition: all .3s ease-out;
+}
+
+.slide-fade-leave-active {
+  transition: all .1s ease-out;
+}
+
+.slide-fade-enter-from{
+    transform: translateX(-300px);
+    opacity: 0;
+}
+.slide-fade-leave-to {
+  transform: translateX(100px);
+  opacity: 0;
+}
 .containerMain{
     @apply text-white max-h-screen grid grid-cols-2 gap-3 max-[600px]:grid-cols-none max-[600px]:gap-0 max-[600px]:grid-rows-[100px_1fr] max-[600px]:h-screen;
 }
@@ -334,23 +350,10 @@ export default{
     @apply bg-brand p-2 max-h-screen min-h-screen grid grid-rows-[auto_1fr_auto] max-[600px]:rounded-t-[50px] max-[600px]:max-h-screen max-[600px]:min-h-0 max-[600px]:-mt-10;
 }
 .slider{
-    @apply flex-grow flex items-center justify-center overflow-y-auto mb-3;
+    @apply flex-grow flex items-center justify-center overflow-y-auto mb-3 overflow-x-hidden;
 }
 .activeLevel{
     @apply border-b border-brand;
-}
-.slide-fade-enter-active {
-  transition: all 0.8s ease-out;
-}
-
-.slide-fade-leave-active {
-  transition: all 0.1s cubic-bezier(1, 0.5, 0.8, 1);
-}
-
-.slide-fade-enter-from,
-.slide-fade-leave-to {
-  transform: translateX(50px);
-  opacity: 0;
 }
 .containerInputs{
     @apply w-fit m-auto grid grid-rows-[auto_1fr_5px] max-[900px]:w-full;
