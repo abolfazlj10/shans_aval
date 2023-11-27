@@ -49,6 +49,7 @@ export default{
     },
     methods:{
         validatData(){
+            console.log('check fild data , 2')
             this.notValid = []
             if(this.level == 2){
                 const one = this.$refs.nameMain.value
@@ -105,8 +106,10 @@ export default{
         unblueInpName(i){
             document.getElementById('name_'+i).focus()
             this.activeUser++
+            this.checkUsers()
         },
         checkUsers(){
+            console.log('check fild users , 3')
             this.emptyUser = []
             for (let i = 1; i <= this.people; i++) {
                 const elName = document.getElementById('name_'+i).value
@@ -116,12 +119,53 @@ export default{
             }
         },
         btnNext(){
-            if(this.level == 3)
-                this.checkUsers
-            else 
+            console.log('next Start' , this.level);
+            if(this.level == 2)
                 this.validatData()
-            this.notValid.length == 0 && this.level++
-            
+            else if(this.level == 3){
+                this.checkUsers()
+                this.emptyUser.length == 0 && this.sendReq()
+            }
+            (this.notValid.length == 0 && this.emptyUser.length == 0) && this.level++
+            console.log('next End' , this.level);            
+        },
+        async sendReq(){
+            console.log('send req data , 3');
+            const users = []
+            for (let i = 1 ; i <= this.people ; i++) {
+                const obj = {
+                    id:i,
+                    name : document.getElementById(`name_${i}`).value,
+                    phone : document.getElementById(`phone_${i}`).value,
+                }
+                if(!this.normalLottery)
+                    obj.isWin = document.getElementById(`isWin_${i}`).checked
+                users.push(obj)
+            }
+            const data = {
+                type : this.normalLottery ? 'New' : 'Continute',
+                nameLottery : this.nameMain,
+                phone : this.numPhone.phone1 + this.numPhone.phone2 + this.numPhone.phone3,
+                nameOwner : this.nameManager,
+                numCard : this.numCard.card1 + this.numCard.card2 + this.numCard.card3 + this.numCard.card4,
+                managerCard : this.managerCard,
+                people : this.people,
+                price : this.price,
+                date : this.date,
+                description : this.description,
+                users : users
+            }
+
+            const url = this.url + '/NewLottery'
+            const req = await fetch(url,{
+                method:'POST',
+                headers:{
+                    'Content-Type' : 'application/json',
+                    'Accept' : 'application/json'
+                },
+                body:JSON.stringify(data)
+            })
+            const res = await req.json()
         }
     }
 }
@@ -241,7 +285,7 @@ export default{
                                     <input type="text" :id="`phone_${i}`" @keydown.enter="i+1 <= people && unblueInpName(i+1)" class="w-full h-2 text-xs placeholder:text-xs inps" placeholder="شماره تماس">
                                 </div>  
                                 <div v-if="!normalLottery" class="dataInfoUser">
-                                    <input type="checkbox">
+                                    <input type="checkbox" :id="`isWin_${i}`">
                                     <div class="text-xs mr-1">قبلا برنده شده است.</div>
                                 </div>  
                             </div>
