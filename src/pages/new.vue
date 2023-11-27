@@ -49,7 +49,6 @@ export default{
     },
     methods:{
         validatData(){
-            console.log('check fild data , 2')
             this.notValid = []
             if(this.level == 2){
                 const one = this.$refs.nameMain.value
@@ -106,10 +105,9 @@ export default{
         unblueInpName(i){
             document.getElementById('name_'+i).focus()
             this.activeUser++
-            this.checkUsers()
+            this.emptyUser != 0 && this.checkUsers()            
         },
         checkUsers(){
-            console.log('check fild users , 3')
             this.emptyUser = []
             for (let i = 1; i <= this.people; i++) {
                 const elName = document.getElementById('name_'+i).value
@@ -119,18 +117,15 @@ export default{
             }
         },
         btnNext(){
-            console.log('next Start' , this.level);
             if(this.level == 2)
                 this.validatData()
             else if(this.level == 3){
                 this.checkUsers()
                 this.emptyUser.length == 0 && this.sendReq()
             }
-            (this.notValid.length == 0 && this.emptyUser.length == 0) && this.level++
-            console.log('next End' , this.level);            
+            (this.notValid.length == 0 && this.emptyUser.length == 0) && this.level++        
         },
         async sendReq(){
-            console.log('send req data , 3');
             const users = []
             for (let i = 1 ; i <= this.people ; i++) {
                 const obj = {
@@ -282,7 +277,7 @@ export default{
                                 </div>                            
                                 <div class="dataInfoUser">
                                     <i class="ri-phone-line"></i>
-                                    <input type="text" :id="`phone_${i}`" @keydown.enter="i+1 <= people && unblueInpName(i+1)" class="w-full h-2 text-xs placeholder:text-xs inps" placeholder="شماره تماس">
+                                    <input type="text" :id="`phone_${i}`" @keydown.enter="i+1 <= people ? unblueInpName(i+1) : btnNext()" class="w-full h-2 text-xs placeholder:text-xs inps" placeholder="شماره تماس">
                                 </div>  
                                 <div v-if="!normalLottery" class="dataInfoUser">
                                     <input type="checkbox" :id="`isWin_${i}`">
