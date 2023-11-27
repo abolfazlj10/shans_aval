@@ -1,5 +1,6 @@
 <script>
 import Num2persian from 'num2persian';
+import { inject } from 'vue';
 export default{
     data(){
         return{
@@ -46,6 +47,10 @@ export default{
             emptyUser:[],
             normalLottery:true,
         }
+    },
+    setup(){
+        const isAlert = inject('isAlert')
+        return{isAlert}
     },
     methods:{
         validatData(){
@@ -161,7 +166,21 @@ export default{
                 body:JSON.stringify(data)
             })
             const res = await req.json()
-        }
+            if(res.succes){
+                this.isAlert(true,{
+                    icon:'succes',
+                    title:' موفقیت آمیز',
+                    description:'قرعه کشی شما با موفقیت ایجاد شد.'
+                })
+            }else{
+                this.isAlert(true,{
+                    icon:'error',
+                    title:'ناموفق',
+                    description:'قرعه کشی شما ایجاد نشد لطفا دوباره تلاش کند.'
+                })
+            }
+            this.$router.push('/')
+        },
     }
 }
 </script>
