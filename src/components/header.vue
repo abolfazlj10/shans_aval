@@ -49,7 +49,7 @@ export default{
                         <i class="ri-file-list-2-fill icon"></i>
                     </button>
                     <router-link to="/New" class="btnAdd group">
-                        <div title="ایجاد قرعه کشی">ایجاد</div>
+                        <div title="اگر ثبت نام نکرده اید ثبت نام کنید.">ایجاد</div>
                         <i class="ri-add-box-fill icon"></i>
                     </router-link>
                     

@@ -1,4 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router'
+import alert from './components/alert.vue'
 
 async function sendReq (){
   const url = 'http://localhost:3000/auth'
@@ -8,7 +9,6 @@ async function sendReq (){
   const res = await req.json()
   return res.status
 }
-
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -41,7 +41,13 @@ const router = createRouter({
     },
     {
       path: '/New',
-      component: () => import('./pages/new.vue')
+      component: () => import('./pages/new.vue'),
+      beforeEnter:async (to,from,next)=>{
+        if(await sendReq())
+          next()
+        else
+          next('/login')
+      }
     },
   ]
 })
