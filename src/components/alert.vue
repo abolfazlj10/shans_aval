@@ -43,10 +43,10 @@ export default{
     @apply fixed h-screen w-screen flex justify-center items-center backdrop-blur-sm z-50 max-[600px]:items-end;
 }
 .Modal{
-    @apply w-[500px] bg-white rounded-[46px] px-7 py-2 shadow-sm flex flex-col gap-8 items-center ring-1 max-[1600px]:w-[450px] max-[1600px]:gap-6 max-[550px]:w-full max-[550px]:rounded-none max-[550px]:rounded-t-[46px];
+    @apply w-[550px] bg-white rounded-[35px] px-7 py-2 shadow-sm flex flex-col gap-10 items-center ring-1 max-[1600px]:w-[450px] max-[1600px]:gap-6 max-[550px]:w-full max-[550px]:rounded-none max-[550px]:rounded-t-[46px];
 }
 .btn{
-    @apply border flex-1 p-4 text-xl rounded-3xl duration-75 focus:outline-none;
+    @apply border flex-1 p-4 text-lg rounded-2xl duration-75 focus:outline-none;
 }
 </style>
 

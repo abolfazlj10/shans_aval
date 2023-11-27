@@ -37,11 +37,11 @@ export default{
         <div class="linkNav">
             <div class="linkItem group">
                 <div class="borderbottom"></div>
-                <router-link to="/">ایجاد</router-link>
+                <router-link to="/New">ایجاد</router-link>
             </div>
             <div class="linkItem group">
                 <div class="borderbottom"></div>
-                <router-link to="/">قرعه کشی ها</router-link>
+                <router-link to="/Lotterys">قرعه کشی ها</router-link>
             </div>
             <div class="linkItem group">
                 <div class="borderbottom"></div>
