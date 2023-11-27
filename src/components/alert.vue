@@ -49,3 +49,9 @@ export default{
     @apply border flex-1 p-4 text-xl rounded-3xl duration-75 focus:outline-none;
 }
 </style>
+
+<!-- this.isAlert(true,{
+    icon:'succes',
+    title:' موفقیت آمیز',
+    description:'رمز حساب کاربری شما با موفقیت تغییر کرد.'
+}) -->
