@@ -46,6 +46,7 @@ export default{
             activeUser:1,
             emptyUser:[],
             normalLottery:true,
+            hidePhone:true,
         }
     },
     setup(){
@@ -146,6 +147,7 @@ export default{
                 type : this.normalLottery ? 'New' : 'Continute',
                 nameLottery : this.nameMain,
                 phone : Number(this.numPhone.phone1 + this.numPhone.phone2 + this.numPhone.phone3),
+                hidePhone : this.hidePhone,
                 nameOwner : this.nameManager,
                 numCard :  Number(String(this.numCard.card1) + String(this.numCard.card2) + String(this.numCard.card3) + String(this.numCard.card4)),
                 managerCard : this.managerCard,
@@ -181,7 +183,7 @@ export default{
             }
             this.$router.push('/')
         },
-    }
+    },
 }
 </script>
 <template>
@@ -282,6 +284,12 @@ export default{
                                 <textarea ref="description" v-model="description" class="inps widthFull900px w-full resize-none" placeholder="مثال : قوانین و نکته های قرعه کشی"></textarea>
                             </div>
                         </div>
+                        <div>
+                            <div class="showPhonwNum">
+                                <input type="checkbox" v-model="hidePhone" checked>
+                                <div>نمایش شماره تماس شرکت کنندگان به کاربران</div>
+                            </div>
+                        </div>
                     </div>
                     <div v-else class="slide3">
                         <div v-for="i in people" class="grid grid-rows-[1fr_20px] gap-1">
@@ -376,7 +384,7 @@ export default{
     @apply flex flex-col gap-3 max-[1300px]:gap-7 max-[900px]:text-sm;
 }
 .slide2{
-    @apply text-sm text-center grid grid-rows-6 mb-auto gap-2 max-[900px]:grid-rows-none max-[900px]:w-full max-[900px]:px-10 max-[900px]:gap-4 max-[600px]:grid-rows-6 max-[600px]:mx-10 max-[500px]:mx-5 max-[400px]:grid-rows-none;
+    @apply text-sm text-center grid grid-rows-[repeat(7,1fr)] mb-auto gap-2 max-[900px]:grid-rows-none max-[900px]:w-full max-[900px]:px-10 max-[900px]:gap-4 max-[600px]:grid-rows-[repeat(7,1fr)] max-[600px]:mx-10 max-[500px]:mx-5 max-[400px]:grid-rows-none;
 }
 .slide3{
     @apply flex-grow h-full grid grid-cols-5 auto-rows-min gap-3 px-3 items-start max-[1760px]:grid-cols-4 max-[1760px]:gap-1 max-[1760px]:gap-x-5 max-[1400px]:grid-cols-3 max-[1100px]:grid-cols-2 max-[700px]:grid-cols-1 max-[700px]:px-10 max-[600px]:grid-cols-2 max-[400px]:grid-cols-1;
@@ -425,5 +433,8 @@ export default{
 }
 .widthFull900px{
     @apply max-[900px]:w-full;
+}
+.showPhonwNum{
+    @apply flex gap-2 justify-center max-[600px]:text-xs;
 }
 </style>
