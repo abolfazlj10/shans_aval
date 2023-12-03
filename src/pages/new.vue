@@ -354,7 +354,7 @@ export default{
   opacity: 0;
 }
 .containerMain{
-    @apply text-white max-h-screen grid grid-cols-2 gap-3 max-[600px]:grid-cols-none max-[600px]:gap-0 max-[600px]:grid-rows-[100px_1fr] max-[600px]:h-screen;
+    @apply text-white max-h-screen grid grid-cols-2 gap-3 max-[600px]:grid-cols-none max-[600px]:gap-0 max-[600px]:grid-rows-[250px_1fr] max-[600px]:h-screen;
 }
 .containerSlides{
     @apply bg-brand p-2 max-h-screen min-h-screen grid grid-rows-[auto_1fr_auto] max-[600px]:rounded-t-[50px] max-[600px]:max-h-screen max-[600px]:min-h-0 max-[600px]:-mt-10;
