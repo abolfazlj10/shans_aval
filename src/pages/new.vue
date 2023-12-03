@@ -45,7 +45,7 @@ export default{
             description:null,
             activeUser:1,
             emptyUser:[],
-            normalLottery:true,
+            typeLottery:'New',
             hidePhone:true,
         }
     },
@@ -139,12 +139,12 @@ export default{
                     name : document.getElementById(`name_${i}`).value,
                     phone : document.getElementById(`phone_${i}`).value,
                 }
-                if(!this.normalLottery)
+                if(this.typeLottery == 'Continue')
                     obj.isWin = document.getElementById(`isWin_${i}`).checked
                 users.push(obj)
             }
             const data = {
-                type : this.normalLottery ? 'New' : 'Continute',
+                type : this.typeLottery,
                 nameLottery : this.nameMain,
                 phone : Number(this.numPhone.phone1 + this.numPhone.phone2 + this.numPhone.phone3),
                 hidePhone : this.hidePhone,
@@ -204,11 +204,15 @@ export default{
                     <div v-if="level == 1" class="slide1">
                         <div class="itemGetstarted">
                             <div>من میخواهم یک قرعه کشی جدید را ایجاد کنم</div>
-                            <input class="cursor-pointer" @click="normalLottery = true" :checked="normalLottery" type="radio" name="test">
+                            <input class="cursor-pointer" @click="typeLottery = 'New'" :checked="typeLottery == 'New'" type="radio">
                         </div>
                         <div class="itemGetstarted">
                             <div>قرعه کشی من در حال اجرا است ولی میخواهم آن را به صورت نوین و با پلتفرم شانس اول مدیریت کنم</div>
-                            <input class="cursor-pointer" @click="normalLottery = false" :checked="!normalLottery"  type="radio" name="test">
+                            <input class="cursor-pointer" @click="typeLottery = 'Continue'" :checked="typeLottery == 'Continue'"  type="radio">
+                        </div>
+                        <div class="itemGetstarted">
+                            <div>قرعه کشی آزمایشی جهت بررسی عملکرد پلتفرم شانس اول</div>
+                            <input class="cursor-pointer" @click="typeLottery = 'Test'" :checked="typeLottery == 'Test'"  type="radio">
                         </div>
                     </div>
                     <div v-else-if="level == 2" class="slide2">
@@ -308,7 +312,7 @@ export default{
                                     <i class="ri-phone-line"></i>
                                     <input type="text" :id="`phone_${i}`" @keydown.enter="i+1 <= people ? unblueInpName(i+1) : btnNext()" class="w-full h-2 text-xs placeholder:text-xs inps" placeholder="شماره تماس">
                                 </div>  
-                                <div v-if="!normalLottery" class="dataInfoUser">
+                                <div v-if="typeLottery == 'Continue'" class="dataInfoUser">
                                     <input type="checkbox" :id="`isWin_${i}`">
                                     <div class="text-xs mr-1">قبلا برنده شده است.</div>
                                 </div>  
