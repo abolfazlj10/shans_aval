@@ -49,6 +49,10 @@ const router = createRouter({
           next('/login')
       }
     },
+    {
+      path:'/Lotterys',
+      component:()=> import('./pages/Lotterys.vue')
+    }
   ]
 })
 
