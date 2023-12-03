@@ -29,9 +29,10 @@ export default{
                 <div class="text-2xl">قرعه کشی ها</div>
                 <div>لیست تمامی قرعه کشی های پلفترم شانس اول</div>
                 <div>
+                    <div class="text-right mb-4">جدیدترین ها</div>
                     <ul class="recumendedLottery">
-                        <div v-for="item in lotterys">
-                            <li class="cursor-pointer">{{ item.id }}) {{ item.name }}</li>
+                        <div v-for="(item,i) in lotterys" v-show="(lotterys.length-3) <= i">
+                            <li class="cursor-pointer">{{ i +1 }}) {{ item.name }}</li>
                             <div class="text-xs opacity-80 mr-4">مدیر: {{ item.owner }}</div>
                         </div>
                     </ul>
@@ -47,7 +48,7 @@ export default{
 </template>
 <style scoped>
 .boxDesc{
-    @apply bg-brand h-[580px] rounded-lg flex text-[#fff] px-5 py-7;
+    @apply bg-brand h-[580px] rounded-lg flex text-[#fff] px-5 py-7 shadow-lg;
 }
 .contentDesc{
     @apply flex-grow flex flex-col gap-10 text-center px-8;
