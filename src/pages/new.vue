@@ -188,7 +188,9 @@ export default{
 </script>
 <template>
     <div class="containerMain !overflow-y-hidden">
-        <div style="background-image: url(../../public/backgNew.png);" class="bg-cover">1</div>
+        <div class="bg-[#09355f] flex justify-center items-center">
+            <img  src="../../public/b0c949e7642ee122067aae5781eddc12.gif" class="w-full">
+        </div>
         <div class="containerSlides">
             <div class="titleSlided">
                 <div>
