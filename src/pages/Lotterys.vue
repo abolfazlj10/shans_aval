@@ -2,6 +2,22 @@
 import Nav from '../components/nav.vue';
 
 export default{
+    data(){
+        return{
+            lotterys:[],
+        }
+    },
+    methods:{
+        async SendReq(){
+            const url = this.url + '/GetLotterys'
+            const req = await fetch(url)
+            const res = await req.json()
+            this.lotterys = res.data
+        }
+    },
+    created(){
+        this.SendReq()
+    },
     components:{Nav}
 }
 </script>
@@ -14,9 +30,10 @@ export default{
                 <div>لیست تمامی قرعه کشی های پلفترم شانس اول</div>
                 <div>
                     <ul class="recumendedLottery">
-                        <li>1 ) خانگی</li>
-                        <li>2 ) یخچال</li>
-                        <li>3 ) ماشین</li>
+                        <div v-for="item in lotterys">
+                            <li class="cursor-pointer">{{ item.id }}) {{ item.name }}</li>
+                            <div class="text-xs opacity-80 mr-4">مدیر: {{ item.owner }}</div>
+                        </div>
                     </ul>
                 </div>
                 <router-link to="/New" class="btnAdd group">
@@ -39,7 +56,7 @@ export default{
     @apply w-9/12 object-cover rounded-lg;
 }
 .recumendedLottery{
-    @apply text-right space-y-3;
+    @apply text-right space-y-5;
 }
 .btnAdd{
     @apply flex flex-row-reverse text-lg gap-2 mt-auto justify-center border p-2 mx-2 rounded-xl bg-white text-brand duration-100 hover:mx-0 hover:scale-105 shadow-lg hover:shadow-xl max-sm:text-sm;
