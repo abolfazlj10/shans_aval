@@ -1,10 +1,16 @@
 <script>
 import Nav from '../components/nav.vue';
-
+import persianDate from 'persian-date';
 export default{
     data(){
         return{
             lotterys:[],
+            unixNow:Math.floor(Date.now() / 1000),
+            date:{
+                year:new persianDate().year(),
+                month:new persianDate().month(),
+                day:new persianDate().date()
+            },
         }
     },
     methods:{
@@ -13,10 +19,46 @@ export default{
             const req = await fetch(url)
             const res = await req.json()
             this.lotterys = res.data
-        }
+        },
+        async dateStartAndEnd(){
+            for (const [index,lottery] of this.lotterys.entries()) {
+                let people = lottery.people
+                people--
+                let startDate;
+
+                if(this.date.day > lottery.date){
+                    startDate = {
+                        year : this.date.year,
+                        month :this.date.month + 1,
+                        day :lottery.date,
+                    }
+                    if(startDate.month == 13){
+                        startDate = {
+                            year : this.date.year + 1,
+                            month :1 ,
+                            day :lottery.date,
+                        }
+                    }
+                }else{
+                    startDate = {
+                        year : this.date.year,
+                        month :this.date.month,
+                        day :lottery.date,
+                    }
+                }
+
+                const formatStartLot = new persianDate([startDate.year, startDate.month, startDate.day]);
+                const StartLotUnixTimestamp = Math.floor(formatStartLot.valueOf())
+                
+                this.lotterys[index].start = new persianDate(StartLotUnixTimestamp).toLocale('en').format('L')
+
+                this.lotterys[index].End = new persianDate(StartLotUnixTimestamp).add('month',people).toLocale('en').format('L')
+            }
+        },
     },
-    created(){
-        this.SendReq()
+    async created(){
+        await this.SendReq()
+        this.dateStartAndEnd()
     },
     components:{Nav}
 }
@@ -43,6 +85,21 @@ export default{
                 </router-link>
             </div>
             <img class="imageDesc" src="../../public/wheel of luck.jpg">
+        </div>
+        <div class="lotterys">
+            <div v-for="item in lotterys" class="boxLottery">
+                <div class="flex justify-between">
+                    <div class="text-xl">{{ item.name }}</div>
+                    <div class="flex gap-1 border border-white/30 p-1 rounded">
+                        <div>{{ item.owner }}</div>
+                        <i class="ri-account-circle-line"></i>
+                    </div>
+                </div>
+                <div>cleander</div>
+                <div>data</div>
+                <div>start :{{ item.start }}</div>
+                <div>End :{{ item.End }}</div>
+            </div>
         </div>
     </div>
 </template>
@@ -75,5 +132,11 @@ export default{
     100%{
         transform: rotate(-10deg);
     }
+}
+.lotterys{
+    @apply flex flex-col gap-10 mt-10;
+}
+.boxLottery{
+    @apply bg-brand text-white rounded-lg p-2;
 }
 </style>
