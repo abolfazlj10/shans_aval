@@ -5,12 +5,12 @@ export default{
     data(){
         return{
             lotterys:[],
-            unixNow:Math.floor(Date.now() / 1000),
             date:{
                 year:new persianDate().year(),
                 month:new persianDate().month(),
                 day:new persianDate().date()
             },
+            months:["فروردین", "اردیبهشت", "خرداد", "تیر", "مرداد", "شهریور", "مهر", "آبان", "آذر", "دی", "بهمن", "اسفند"]
         }
     },
     methods:{
@@ -50,11 +50,25 @@ export default{
                 const formatStartLot = new persianDate([startDate.year, startDate.month, startDate.day]);
                 const StartLotUnixTimestamp = Math.floor(formatStartLot.valueOf())
                 
-                this.lotterys[index].start = new persianDate(StartLotUnixTimestamp).toLocale('en').format('L')
+                this.lotterys[index].start = new persianDate(StartLotUnixTimestamp).toLocale('en').toArray()
 
-                this.lotterys[index].End = new persianDate(StartLotUnixTimestamp).add('month',people).toLocale('en').format('L')
+                this.lotterys[index].end = new persianDate(StartLotUnixTimestamp).add('month',people).toLocale('en').toArray()
+
+
+                this.lotterys[index].month = this.testMonthLottery(this.lotterys[index].start , this.lotterys[index].end,lottery.people)
             }
         },
+        testMonthLottery(s,e,people){
+            const monthLottery = []
+            let monthStart = s[1]
+            for (let month = 0; month < people; month++) {
+                monthLottery.push(this.months[monthStart-1])
+                monthStart++
+                if(monthStart == 13)
+                monthStart = 1
+            }
+            return monthLottery
+        }
     },
     async created(){
         await this.SendReq()
@@ -95,10 +109,18 @@ export default{
                         <i class="ri-account-circle-line"></i>
                     </div>
                 </div>
-                <div>cleander</div>
+                <div class="cleander">
+                    <div class="monthCleander" v-for="(month,index) in item.month" :class="item.month.length == (index+1) && 'border-none'">
+                        <div>{{ month }}:</div>
+                        <div class="w-full flex justify-around">
+                            <div v-for="i in 30" class="px-2 py-1" :class="item.date == i && 'bg-white text-brand rounded-full'">{{ i }}</div>
+                        </div>
+                    </div>
+                </div>
                 <div>data</div>
                 <div>start :{{ item.start }}</div>
-                <div>End :{{ item.End }}</div>
+                <div>End :{{ item.end }}</div>
+
             </div>
         </div>
     </div>
@@ -138,5 +160,11 @@ export default{
 }
 .boxLottery{
     @apply bg-brand text-white rounded-lg p-2;
+}
+.cleander{
+    @apply border border-white/50 my-2 p-2 flex flex-col gap-2 rounded-lg;
+}
+.monthCleander{
+    @apply border-b border-white/40 p-1 grid grid-cols-[100px_1fr];
 }
 </style>
