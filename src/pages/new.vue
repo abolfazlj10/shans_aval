@@ -86,7 +86,7 @@ export default{
                 if(isLengthUsers == '')  this.notValid.push(9)
                 if(isPrice == '')  this.notValid.push(10)
                 if(isDate == '')  this.notValid.push(11)
-                if(isLengthUsers != '' && (isLengthUsers >= 100 || isLengthUsers <= 0)) this.notValid.push(12)
+                if(isLengthUsers != '' && (isLengthUsers >= 100 || isLengthUsers <= 3)) this.notValid.push(12)
                 if(isDate != '' && (isDate >= 30 || isDate <= 0)) this.notValid.push(13)
 
             }
@@ -181,7 +181,7 @@ export default{
                     description:'قرعه کشی شما ایجاد نشد لطفا دوباره تلاش کند.'
                 })
             }
-            this.$router.push('/')
+            this.$router.push('/lotterys')
         },
     },
 }
@@ -261,10 +261,10 @@ export default{
                         <div class="twoInpt">
                             <div class="containerInputs !w-full">
                                 <div class="labelInput w-full">تعدا شرکت کنندگان:</div>
-                                <input type="number" :class="(notValid.includes(9) || notValid.includes(7) || notValid.includes(12)) ? '!border-red-500' : 'focus-within:!border-white'" v-model="people" ref="lengthUsers" @input="(notValid.includes(9) || notValid.includes(7) || notValid.includes(12)) && validatData()" @keyup.enter="$refs.priceAll.focus()" min="0" max="99" maxlength="2" class="inps widthFull900px h-min w-full" placeholder="بین 1 تا 99">
+                                <input type="number" :class="(notValid.includes(9) || notValid.includes(7) || notValid.includes(12)) ? '!border-red-500' : 'focus-within:!border-white'" v-model="people" ref="lengthUsers" @input="(notValid.includes(9) || notValid.includes(7) || notValid.includes(12)) && validatData()" @keyup.enter="$refs.priceAll.focus()" min="0" max="99" maxlength="2" class="inps widthFull900px h-min w-full" placeholder="بین 3 تا 100">
                                 <div v-if="notValid.includes(9)" class="fildErr">فیلد بالا را پر کنید.</div>
                                 <div v-else-if="notValid.includes(7)" class="fildErr">معتبر نمی باشد.</div>
-                                <div v-else-if="notValid.includes(12)" class="fildErr">عدد ورودی باید بین 1 تا 99 باشد.</div>
+                                <div v-else-if="notValid.includes(12)" class="fildErr">عدد ورودی باید بین 3 تا 100 باشد.</div>
                                 <div v-else-if="people" class="fildErr !text-green-400">{{ people }} نفر</div>
                             </div>
                             <div class="containerInputs">
