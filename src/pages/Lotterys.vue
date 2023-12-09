@@ -46,7 +46,6 @@ export default{
                         day :lottery.date,
                     }
                 }
-
                 const formatStartLot = new persianDate([startDate.year, startDate.month, startDate.day]);
                 const StartLotUnixTimestamp = Math.floor(formatStartLot.valueOf())
                 
@@ -55,14 +54,19 @@ export default{
                 this.lotterys[index].end = new persianDate(StartLotUnixTimestamp).add('month',people).toLocale('en').toArray()
 
 
-                this.lotterys[index].month = this.testMonthLottery(this.lotterys[index].start , this.lotterys[index].end,lottery.people,startDate.year)
+                this.lotterys[index].month = this.monthLottery(this.lotterys[index].start , lottery.people,startDate.year)
             }
         },
-        testMonthLottery(s,e,people,year){
+        monthLottery(s,people,year){
             const monthLottery = []
             let monthStart = s[1]
             for (let month = 0; month < people; month++) {
-                monthLottery.push({year:year,month:this.months[monthStart-1]})
+                const day = new persianDate([year,monthStart]).daysInMonth()
+                monthLottery.push({
+                    year:year,
+                    month:this.months[monthStart-1],
+                    day:day
+                })
                 monthStart++
                 if(monthStart == 13){
                     year++   
@@ -117,8 +121,8 @@ export default{
                             <div>{{ month.month }}</div>
                             <sub class="mr-1 text-[11px]"> {{ month.year }} </sub>:
                         </div>
-                        <div class="w-full flex justify-around">
-                            <div v-for="i in 30" class="px-2 py-1" :class="item.date == i && 'bg-white text-brand rounded-full'">{{ i }}</div>
+                        <div class="w-full grid grid-cols-[repeat(31,1fr)] text-center">
+                            <div v-for="i in month.day" class="p-2" :class="item.date == i && 'bg-white text-brand rounded-full'">{{ i }}</div>
                         </div>
                     </div>
                 </div>
