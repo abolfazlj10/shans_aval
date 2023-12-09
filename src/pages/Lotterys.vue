@@ -55,17 +55,19 @@ export default{
                 this.lotterys[index].end = new persianDate(StartLotUnixTimestamp).add('month',people).toLocale('en').toArray()
 
 
-                this.lotterys[index].month = this.testMonthLottery(this.lotterys[index].start , this.lotterys[index].end,lottery.people)
+                this.lotterys[index].month = this.testMonthLottery(this.lotterys[index].start , this.lotterys[index].end,lottery.people,startDate.year)
             }
         },
-        testMonthLottery(s,e,people){
+        testMonthLottery(s,e,people,year){
             const monthLottery = []
             let monthStart = s[1]
             for (let month = 0; month < people; month++) {
-                monthLottery.push(this.months[monthStart-1])
+                monthLottery.push({year:year,month:this.months[monthStart-1]})
                 monthStart++
-                if(monthStart == 13)
-                monthStart = 1
+                if(monthStart == 13){
+                    year++   
+                    monthStart = 1
+                }
             }
             return monthLottery
         }
@@ -111,7 +113,10 @@ export default{
                 </div>
                 <div class="cleander">
                     <div class="monthCleander" v-for="(month,index) in item.month" :class="item.month.length == (index+1) && 'border-none'">
-                        <div>{{ month }}:</div>
+                        <div class="grid grid-cols-[80px_40px_1fr] items-center">
+                            <div>{{ month.month }}</div>
+                            <sub class="mr-1 text-[11px]"> {{ month.year }} </sub>:
+                        </div>
                         <div class="w-full flex justify-around">
                             <div v-for="i in 30" class="px-2 py-1" :class="item.date == i && 'bg-white text-brand rounded-full'">{{ i }}</div>
                         </div>
@@ -165,6 +170,6 @@ export default{
     @apply border border-white/50 my-2 p-2 flex flex-col gap-2 rounded-lg;
 }
 .monthCleander{
-    @apply border-b border-white/40 p-1 grid grid-cols-[100px_1fr];
+    @apply border-b border-white/40 p-2 grid grid-cols-[130px_1fr];
 }
 </style>
