@@ -87,7 +87,7 @@ export default{
                 if(isPrice == '')  this.notValid.push(10)
                 if(isDate == '')  this.notValid.push(11)
                 if(isLengthUsers != '' && (isLengthUsers >= 100 || isLengthUsers <= 3)) this.notValid.push(12)
-                if(isDate != '' && (isDate >= 30 || isDate <= 0)) this.notValid.push(13)
+                if(isDate != '' && (isDate >= 31 || isDate <= 0)) this.notValid.push(13)
 
             }
         },
@@ -278,9 +278,9 @@ export default{
                         <div>
                             <div class="containerInputs">
                                 <div class="labelInput">تاریخ قرعه کشی :</div>
-                                <input type="number" :class="(notValid.includes(11) || notValid.includes(13)) ? '!border-red-500' : 'focus-within:!border-white'" v-model="date" ref="date" @input="(notValid.includes(11) || notValid.includes(13)) && validatData()" @keyup.enter="$refs.description.focus()" class="inps widthFull900px w-full text-center sizeInp" min="0" max="29" placeholder="بین 1 تا 29">
+                                <input type="number" :class="(notValid.includes(11) || notValid.includes(13)) ? '!border-red-500' : 'focus-within:!border-white'" v-model="date" ref="date" @input="(notValid.includes(11) || notValid.includes(13)) && validatData()" @keyup.enter="$refs.description.focus()" class="inps widthFull900px w-full text-center sizeInp" min="0" max="30" placeholder="بین 0 تا 31">
                                 <div v-if="notValid.includes(11)" class="fildErr">فیلد بالا را پر کنید.</div>
-                                <div v-else-if="notValid.includes(13)" class="fildErr">عدد ورودی باید بین 1 تا 29 باشد.</div>
+                                <div v-else-if="notValid.includes(13)" class="fildErr">عدد ورودی باید بین 0 تا 31 باشد.</div>
                                 <div v-else-if="date" class="fildErr !text-green-400">{{ date }} ام</div>
                             </div>
                         </div>
