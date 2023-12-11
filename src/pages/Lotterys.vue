@@ -10,7 +10,10 @@ export default{
                 month:new persianDate().month(),
                 day:new persianDate().date()
             },
-            months:["فروردین", "اردیبهشت", "خرداد", "تیر", "مرداد", "شهریور", "مهر", "آبان", "آذر", "دی", "بهمن", "اسفند"]
+            months:["فروردین", "اردیبهشت", "خرداد", "تیر", "مرداد", "شهریور", "مهر", "آبان", "آذر", "دی", "بهمن", "اسفند"],
+            maxWidthMonth:null,
+            isShow:false,
+            showCleander:[]
         }
     },
     methods:{
@@ -18,9 +21,9 @@ export default{
             const url = this.url + '/GetLotterys'
             const req = await fetch(url)
             const res = await req.json()
-            this.lotterys = res.data
+            this.lotterys = await res.data
         },
-        async dateStartAndEnd(){
+        dateStartAndEnd(){
             for (const [index,lottery] of this.lotterys.entries()) {
                 let people = lottery.people
                 people--
@@ -77,18 +80,36 @@ export default{
         },
         isLeapYear(year){
             return new persianDate([year]).isLeapYear()
+        },
+        getHeightMonth(){
+            this.$nextTick(()=>{
+                const elem = this.$refs.monthCleander[1]
+                let heightElem = window.getComputedStyle(elem).height
+                this.maxWidthMonth = Math.floor(heightElem.substr(0,heightElem.length-2) * 5)
+            })
+        },
+        showHideClenader(month){
+            const isShow = this.showCleander.includes(month)
+            if(!isShow){
+                this.showCleander.push(month)
+            }else{
+                const index = this.showCleander.indexOf(month)
+                this.showCleander.splice(index,1)
+            }
         }
     },
     async created(){
         await this.SendReq()
-        this.dateStartAndEnd()
+        await this.dateStartAndEnd()
+        this.isShow = true
+        this.getHeightMonth()
     },
     components:{Nav}
 }
 </script>
 <template>
     <Nav/>
-    <div class="container mt-10">
+    <div class="container mt-10" v-if="isShow">
         <div class="boxDesc">
             <div class="contentDesc">
                 <div class="text-2xl">قرعه کشی ها</div>
@@ -110,29 +131,31 @@ export default{
             <img class="imageDesc" src="../../public/wheel of luck.jpg">
         </div>
         <div class="lotterys">
-            <div v-for="item in lotterys" class="boxLottery">
+            <div v-for="lottery in lotterys" class="boxLottery">
                 <div class="flex justify-between">
-                    <div class="text-xl">{{ item.name }}</div>
+                    <div class="text-xl">{{ lottery.name }}</div>
                     <div class="flex gap-1 border border-white/30 p-1 rounded">
-                        <div>{{ item.owner }}</div>
+                        <div>{{ lottery.owner }}</div>
                         <i class="ri-account-circle-line"></i>
                     </div>
                 </div>
-                <div class="cleander">
-                    <div class="monthCleander" v-for="(month,index) in item.month" :class="item.month.length == (index+1) && 'border-none'">
+                <div class="cleander" :style="!showCleander.includes('month_'+lottery.id) ? `max-height:${maxWidthMonth}px` : `max-height:${maxWidthMonth*lottery.month.length}px`">
+                    <div class="monthCleander" v-for="(month,index) in lottery.month" :class="lottery.month.length == (index+1) && 'border-none'"  ref="monthCleander">
                         <div class="grid grid-cols-[80px_40px_1fr] items-center">
                             <div>{{ month.month }}</div>
                             <sub class="mr-1 text-[11px]"> {{ month.year }} </sub>:
                         </div>
                         <div class="w-full grid grid-cols-[repeat(31,1fr)] text-center">
-                            <div v-for="i in month.day" class="p-2" :class="[(item.date == i && 'markDate'),((!isLeapYear(month.year) && month.month == 'اسفند' && item.date == 30 && i == 29) && 'markDate')]">{{ i }}</div>
+                            <div v-for="i in month.day" class="p-2" :class="[(lottery.date == i && 'markDate'),((!isLeapYear(month.year) && month.month == 'اسفند' && lottery.date == 30 && i == 29) && 'markDate')]">{{ i }}</div>
                         </div>
+                    </div>
+                    <div class="blurHide" v-if="lottery.month.length >= 5">
+                        <i @click="showHideClenader('month_'+lottery.id)" class="ri-arrow-up-s-line btnShow" :class="!showCleander.includes('month_'+lottery.id) && 'rotate-180'"></i>
                     </div>
                 </div>
                 <div>data</div>
-                <div>start :{{ item.start }}</div>
-                <div>End :{{ item.end }}</div>
-
+                <div>start :{{ lottery.start }}</div>
+                <div>End :{{ lottery.end }}</div>
             </div>
         </div>
     </div>
@@ -174,12 +197,31 @@ export default{
     @apply bg-brand text-white rounded-lg p-2;
 }
 .cleander{
-    @apply border border-white/50 my-2 p-2 flex flex-col gap-2 rounded-lg;
+    @apply border border-white/50 my-2 flex flex-col gap-2 rounded-lg overflow-y-scroll;
+    transition: all 1s ease-in;
+}
+.cleander::-webkit-scrollbar{
+    width: 10px;
+    background-color: rgb(255, 255, 255);
+    border-radius: 50px;
+}
+.cleander::-webkit-scrollbar-track {
+    background-color: #1900ffbe 0.298;
+}
+.cleander::-webkit-scrollbar-thumb {
+    @apply bg-black/75 rounded-full;
 }
 .monthCleander{
-    @apply border-b border-white/40 p-2 grid grid-cols-[130px_1fr];
+    @apply border-b border-white/40 p-2 grid grid-cols-[130px_1fr] mx-2;
 }
 .markDate{
     @apply bg-white text-brand rounded-full;
+}
+.blurHide{
+    @apply sticky -bottom-1 pt-4 pb-1 bg-gradient-to-t from-black/70 to-black/0 text-center text-3xl rounded-t-lg;
+}
+.btnShow{
+    @apply cursor-pointer block;
+    transition: all .8s ease;
 }
 </style>
