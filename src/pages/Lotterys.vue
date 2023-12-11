@@ -74,6 +74,9 @@ export default{
                 }
             }
             return monthLottery
+        },
+        isLeapYear(year){
+            return new persianDate([year]).isLeapYear()
         }
     },
     async created(){
@@ -122,7 +125,7 @@ export default{
                             <sub class="mr-1 text-[11px]"> {{ month.year }} </sub>:
                         </div>
                         <div class="w-full grid grid-cols-[repeat(31,1fr)] text-center">
-                            <div v-for="i in month.day" class="p-2" :class="item.date == i && 'bg-white text-brand rounded-full'">{{ i }}</div>
+                            <div v-for="i in month.day" class="p-2" :class="[(item.date == i && 'markDate'),((!isLeapYear(month.year) && month.month == 'اسفند' && item.date == 30 && i == 29) && 'markDate')]">{{ i }}</div>
                         </div>
                     </div>
                 </div>
@@ -175,5 +178,8 @@ export default{
 }
 .monthCleander{
     @apply border-b border-white/40 p-2 grid grid-cols-[130px_1fr];
+}
+.markDate{
+    @apply bg-white text-brand rounded-full;
 }
 </style>
