@@ -1,6 +1,7 @@
 <script>
 import Nav from '../components/nav.vue';
 import persianDate from 'persian-date';
+import loader from '../components/loader.vue'
 export default{
     data(){
         return{
@@ -99,63 +100,67 @@ export default{
         }
     },
     async created(){
+        this.isShow = false
         await this.SendReq()
         await this.dateStartAndEnd()
         this.isShow = true
         this.getHeightMonth()
     },
-    components:{Nav}
+    components:{Nav,loader}
 }
 </script>
 <template>
-    <Nav/>
-    <div class="container mt-10" v-if="isShow">
-        <div class="boxDesc">
-            <div class="contentDesc">
-                <div class="text-2xl">قرعه کشی ها</div>
-                <div>لیست تمامی قرعه کشی های پلفترم شانس اول</div>
-                <div>
-                    <div class="text-right mb-4">جدیدترین ها</div>
-                    <ul class="recumendedLottery">
-                        <div v-for="(item,i) in lotterys" v-show="(lotterys.length-3) <= i">
-                            <li class="cursor-pointer">{{ i +1 }}) {{ item.name }}</li>
-                            <div class="text-xs opacity-80 mr-4">مدیر: {{ item.owner }}</div>
-                        </div>
-                    </ul>
+    <loader v-if="!isShow"/>
+    <div v-else>
+        <Nav />
+        <div class="container mt-10">
+            <div class="boxDesc">
+                <div class="contentDesc">
+                    <div class="text-2xl">قرعه کشی ها</div>
+                    <div>لیست تمامی قرعه کشی های پلفترم شانس اول</div>
+                    <div>
+                        <div class="text-right mb-4">جدیدترین ها</div>
+                        <ul class="recumendedLottery">
+                            <div v-for="(item,i) in lotterys" v-show="(lotterys.length-3) <= i">
+                                <li class="cursor-pointer">{{ i +1 }}) {{ item.name }}</li>
+                                <div class="text-xs opacity-80 mr-4">مدیر: {{ item.owner }}</div>
+                            </div>
+                        </ul>
+                    </div>
+                    <router-link to="/New" class="btnAdd group">
+                        <div title="اگر ثبت نام نکرده اید ثبت نام کنید.">ایجاد</div>
+                        <i class="ri-add-box-fill icon"></i>
+                    </router-link>
                 </div>
-                <router-link to="/New" class="btnAdd group">
-                    <div title="اگر ثبت نام نکرده اید ثبت نام کنید.">ایجاد</div>
-                    <i class="ri-add-box-fill icon"></i>
-                </router-link>
+                <img class="imageDesc" src="../../public/wheel of luck.jpg">
             </div>
-            <img class="imageDesc" src="../../public/wheel of luck.jpg">
-        </div>
-        <div class="lotterys">
-            <div v-for="lottery in lotterys" class="boxLottery">
-                <div class="flex justify-between">
-                    <div class="text-xl">{{ lottery.name }}</div>
-                    <div class="flex gap-1 border border-white/30 p-1 rounded">
-                        <div>{{ lottery.owner }}</div>
-                        <i class="ri-account-circle-line"></i>
-                    </div>
-                </div>
-                <div class="cleander" :style="!showCleander.includes('month_'+lottery.id) ? `max-height:${maxWidthMonth}px` : `max-height:${maxWidthMonth*lottery.month.length}px`">
-                    <div class="monthCleander" v-for="(month,index) in lottery.month" :class="lottery.month.length == (index+1) && 'border-none'"  ref="monthCleander">
-                        <div class="grid grid-cols-[80px_40px_1fr] items-center">
-                            <div>{{ month.month }}</div>
-                            <sub class="mr-1 text-[11px]"> {{ month.year }} </sub>:
-                        </div>
-                        <div class="w-full grid grid-cols-[repeat(31,1fr)] text-center">
-                            <div v-for="i in month.day" class="p-2" :class="[(lottery.date == i && 'markDate'),((!isLeapYear(month.year) && month.month == 'اسفند' && lottery.date == 30 && i == 29) && 'markDate')]">{{ i }}</div>
+            <div class="lotterys">
+                <div v-for="lottery in lotterys" class="boxLottery">
+                    <div class="flex justify-between">
+                        <div class="text-xl">{{ lottery.name }}</div>
+                        <div class="flex gap-1 border border-white/30 p-1 rounded">
+                            <div>{{ lottery.owner }}</div>
+                            <i class="ri-account-circle-line"></i>
                         </div>
                     </div>
-                    <div class="blurHide" v-if="lottery.month.length >= 5">
-                        <i @click="showHideClenader('month_'+lottery.id)" class="ri-arrow-up-s-line btnShow" :class="!showCleander.includes('month_'+lottery.id) && 'rotate-180'"></i>
+                    <div class="cleander" :style="!showCleander.includes('month_'+lottery.id) ? `max-height:${maxWidthMonth}px` : `max-height:${maxWidthMonth*lottery.month.length}px`">
+                        <div class="monthCleander" v-for="(month,index) in lottery.month" :class="lottery.month.length == (index+1) && 'border-none'"  ref="monthCleander">
+                            <div class="grid grid-cols-[80px_40px_1fr] items-center">
+                                <div>{{ month.month }}</div>
+                                <sub class="mr-1 text-[11px]"> {{ month.year }} </sub>:
+                            </div>
+                            <div class="w-full grid grid-cols-[repeat(31,1fr)] text-center">
+                                <div v-for="i in month.day" class="p-2" :class="[(lottery.date == i && 'markDate'),((!isLeapYear(month.year) && month.month == 'اسفند' && lottery.date == 30 && i == 29) && 'markDate')]">{{ i }}</div>
+                            </div>
+                        </div>
+                        <div class="blurHide" v-if="lottery.month.length >= 5">
+                            <i @click="showHideClenader('month_'+lottery.id)" class="ri-arrow-up-s-line btnShow" :class="!showCleander.includes('month_'+lottery.id) && 'rotate-180'"></i>
+                        </div>
                     </div>
+                    <div>data</div>
+                    <div>start :{{ lottery.start }}</div>
+                    <div>End :{{ lottery.end }}</div>
                 </div>
-                <div>data</div>
-                <div>start :{{ lottery.start }}</div>
-                <div>End :{{ lottery.end }}</div>
             </div>
         </div>
     </div>
