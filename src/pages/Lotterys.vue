@@ -69,13 +69,23 @@ export default{
                 monthLottery.push({
                     year:year,
                     month:this.months[monthStart-1],
-                    day:day
+                    day:day,
+                    justShow:false
                 })
                 monthStart++
                 if(monthStart == 13){
                     year++   
                     monthStart = 1
                 }
+            }
+            if(monthLottery[0].month != this.months[this.date.month-1]){
+                let day = new persianDate([this.date.year,this.date.month]).daysInMonth()
+                monthLottery.unshift({
+                        year:this.date.year,
+                        month:this.months[this.date.month-1],
+                        day:day,
+                        justShow:true
+                })
             }
             return monthLottery
         },
@@ -126,8 +136,7 @@ export default{
 }
 </script>
 <template>
-    <!-- <div v-if="!isShow"></div> -->
-    <loader v-if="!isShow"/>
+    <div v-if="!isShow"></div>
     <div v-else>
         <Nav />
         <div class="container mt-10">
@@ -160,14 +169,22 @@ export default{
                             <i class="ri-account-circle-line"></i>
                         </div>
                     </div>
-                    <div class="cleander" ref="cleander" :class="lottery.month.length >= 5 && 'overflow-y-scroll'" :style="[((!isCleanderShow(lottery.id) && lottery.month.length >= 5) && `height:${SDSMC.maxWidthMonth*5}px;`),((isCleanderShow(lottery.id) && lottery.month.length >= 5) && `height:${(SDSMC.maxWidthMonth*lottery.month.length)+SDSMC.heightBlurHider-SDSMC.gapCleander}px` )]">
+                    <div class="cleander" ref="cleander" 
+                    :class="lottery.month.length >= 5 && 'overflow-y-scroll'" :style="[((!isCleanderShow(lottery.id) && lottery.month.length >= 5) && `height:${SDSMC.maxWidthMonth*5}px;`),((isCleanderShow(lottery.id) && lottery.month.length >= 5) && `height:${(SDSMC.maxWidthMonth*lottery.month.length)+SDSMC.heightBlurHider-SDSMC.gapCleander}px`)]"
+                    >
                         <div class="monthCleander" v-for="(month,index) in lottery.month" :class="lottery.month.length == (index+1) && 'border-none'"  ref="monthCleander">
                             <div class="grid grid-cols-[80px_40px_1fr] items-center">
                                 <div>{{ month.month }}</div>
                                 <sub class="mr-1 text-[11px]"> {{ month.year }} </sub>:
                             </div>
                             <div class="w-full grid grid-cols-[repeat(31,1fr)] text-center">
-                                <div v-for="i in month.day" class="p-2" :class="[(lottery.date == i && 'markDate'),((!isLeapYear(month.year) && month.month == 'اسفند' && lottery.date == 30 && i == 29) && 'markDate')]">{{ i }}</div>
+                                <div v-for="i in month.day" class="p-2 flex justify-center gap-1"
+                                :class="[((lottery.date == i && !month.justShow)&& 'markDate'),((!isLeapYear(month.year) && month.month == 'اسفند' && lottery.date == 30 && i == 29 && !month.justShow) && 'markDate'),
+                                ((date.day == i && month.month == months[date.month-1] && date.year == month.year) && 'border border-green-300 rounded-full relative')]"
+                                >
+                                    <i v-if="date.day == i && month.month == months[date.month-1] && date.year == month.year" class="ri-bookmark-fill text-green-300 absolute -top-1 -right-1"></i>
+                                    <div>{{ i }}</div>
+                                </div>
                             </div>
                         </div>
                         <div class="blurHide" ref="blurHide" v-if="lottery.month.length >= 5">
