@@ -123,6 +123,15 @@ export default{
         },
         isCleanderShow(cleanderID){
             return this.showCleander.includes('Cleander_'+cleanderID)
+        },
+        scrollBookMark(ID){
+            const elem = this.$refs.lottery[ID-1]
+            const positionY = elem.getBoundingClientRect().y
+            window.scrollTo({
+                top:positionY-10,
+                left:0,
+                behavior:'smooth'
+            })
         }
     },
     async created(){
@@ -148,7 +157,7 @@ export default{
                         <div class="text-right mb-4">جدیدترین ها</div>
                         <ul class="recumendedLottery">
                             <div v-for="(item,i) in lotterys" v-show="(lotterys.length-3) <= i">
-                                <li class="cursor-pointer">{{ i +1 }}) {{ item.name }}</li>
+                                <li @click="scrollBookMark(item.id)" class="cursor-pointer">{{ i +1 }}) {{ item.name }}</li>
                                 <div class="text-xs opacity-80 mr-4">مدیر: {{ item.owner }}</div>
                             </div>
                         </ul>
@@ -161,7 +170,7 @@ export default{
                 <img class="imageDesc" src="../../public/wheel of luck.jpg">
             </div>
             <div class="lotterys">
-                <div v-for="lottery in lotterys" class="boxLottery">
+                <div v-for="lottery in lotterys" class="boxLottery" ref="lottery">
                     <div class="flex justify-between">
                         <div class="text-xl">{{ lottery.name }}</div>
                         <div class="flex gap-1 border border-white/30 p-1 rounded">
@@ -178,8 +187,9 @@ export default{
                                 <sub class="mr-1 text-[11px]"> {{ month.year }} </sub>:
                             </div>
                             <div class="w-full grid grid-cols-[repeat(31,1fr)] text-center">
-                                <div v-for="i in month.day" class="p-2 flex justify-center gap-1"
-                                :class="[((lottery.date == i && !month.justShow)&& 'markDate'),((!isLeapYear(month.year) && month.month == 'اسفند' && lottery.date == 30 && i == 29 && !month.justShow) && 'markDate'),
+                                <div v-for="i in month.day" class="py-2 px-3 flex justify-center gap-1"
+                                :class="[((lottery.date == i && !month.justShow)&& 'markDate'),
+                                ((!isLeapYear(month.year) && month.month == 'اسفند' && lottery.date == 30 && i == 29 && !month.justShow) && 'markDate'),
                                 ((date.day == i && month.month == months[date.month-1] && date.year == month.year) && 'border border-green-300 rounded-full relative')]"
                                 >
                                     <i v-if="date.day == i && month.month == months[date.month-1] && date.year == month.year" class="ri-bookmark-fill text-green-300 absolute -top-1 -right-1"></i>
@@ -254,7 +264,7 @@ export default{
     @apply border-b border-white/40 p-2 grid grid-cols-[130px_1fr] mx-2;
 }
 .markDate{
-    @apply bg-white text-brand rounded-full;
+    @apply border rounded-full;
 }
 .blurHide{
     @apply sticky -bottom-1 pt-1 pb-1 bg-gradient-to-t from-brand/90 via-brand/80 to-brand/10 text-center text-3xl rounded-t-lg;
