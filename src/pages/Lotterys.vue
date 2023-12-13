@@ -12,9 +12,9 @@ export default{
                 day:new persianDate().date()
             },
             months:["فروردین", "اردیبهشت", "خرداد", "تیر", "مرداد", "شهریور", "مهر", "آبان", "آذر", "دی", "بهمن", "اسفند"],
-            maxWidthMonth:null,
             isShow:false,
-            showCleander:[]
+            showCleander:[],
+            SDSMC:{gapCleander:null,maxWidthMonth:null,heightBlurHider:null}, // name = style display show month of cleander
         }
     },
     methods:{
@@ -84,9 +84,18 @@ export default{
         },
         getHeightMonth(){
             this.$nextTick(()=>{
-                const elem = this.$refs.monthCleander[1]
-                let heightElem = window.getComputedStyle(elem).height
-                this.maxWidthMonth = Math.floor(heightElem.substr(0,heightElem.length-2) * 5)
+                const cleanderElem = this.$refs.cleander[0]
+                this.SDSMC.gapCleander = this.removerPX(window.getComputedStyle(cleanderElem).gap)                
+
+                const monthElem = this.$refs.monthCleander[0]
+                let heightElem = this.removerPX(window.getComputedStyle(monthElem).height)
+                let PaddingElem = this.removerPX(window.getComputedStyle(monthElem).padding)
+                this.SDSMC.maxWidthMonth = heightElem + PaddingElem
+
+                const blurHideElem = this.$refs.blurHide[0]
+                const blurHideHeight = this.removerPX(window.getComputedStyle(blurHideElem).height)
+                const blurHidePadding = this.removerPX(window.getComputedStyle(blurHideElem).paddingTop)
+                this.SDSMC.heightBlurHider = blurHideHeight + blurHidePadding
             })
         },
         showHideClenader(month){
@@ -97,6 +106,13 @@ export default{
                 const index = this.showCleander.indexOf(month)
                 this.showCleander.splice(index,1)
             }
+        },
+        removerPX(str){
+            const convert = str.substr(0,str.length-2)
+            return Number(convert)
+        },
+        isCleanderShow(cleanderID){
+            return this.showCleander.includes('Cleander_'+cleanderID)
         }
     },
     async created(){
@@ -110,6 +126,7 @@ export default{
 }
 </script>
 <template>
+    <!-- <div v-if="!isShow"></div> -->
     <loader v-if="!isShow"/>
     <div v-else>
         <Nav />
@@ -143,7 +160,7 @@ export default{
                             <i class="ri-account-circle-line"></i>
                         </div>
                     </div>
-                    <div class="cleander" :style="!showCleander.includes('month_'+lottery.id) ? `max-height:${maxWidthMonth}px` : `max-height:${maxWidthMonth*lottery.month.length}px`">
+                    <div class="cleander" ref="cleander" :class="lottery.month.length >= 5 && 'overflow-y-scroll'" :style="[((!isCleanderShow(lottery.id) && lottery.month.length >= 5) && `height:${SDSMC.maxWidthMonth*5}px;`),((isCleanderShow(lottery.id) && lottery.month.length >= 5) && `height:${(SDSMC.maxWidthMonth*lottery.month.length)+SDSMC.heightBlurHider-SDSMC.gapCleander}px` )]">
                         <div class="monthCleander" v-for="(month,index) in lottery.month" :class="lottery.month.length == (index+1) && 'border-none'"  ref="monthCleander">
                             <div class="grid grid-cols-[80px_40px_1fr] items-center">
                                 <div>{{ month.month }}</div>
@@ -153,8 +170,8 @@ export default{
                                 <div v-for="i in month.day" class="p-2" :class="[(lottery.date == i && 'markDate'),((!isLeapYear(month.year) && month.month == 'اسفند' && lottery.date == 30 && i == 29) && 'markDate')]">{{ i }}</div>
                             </div>
                         </div>
-                        <div class="blurHide" v-if="lottery.month.length >= 5">
-                            <i @click="showHideClenader('month_'+lottery.id)" class="ri-arrow-up-s-line btnShow" :class="!showCleander.includes('month_'+lottery.id) && 'rotate-180'"></i>
+                        <div class="blurHide" ref="blurHide" v-if="lottery.month.length >= 5">
+                            <i @click="showHideClenader('Cleander_'+lottery.id)" class="ri-arrow-up-s-line btnShow" :class="!isCleanderShow(lottery.id) && 'rotate-180'"></i>
                         </div>
                     </div>
                     <div>data</div>
@@ -202,8 +219,8 @@ export default{
     @apply bg-brand text-white rounded-lg p-2;
 }
 .cleander{
-    @apply border border-white/50 my-2 flex flex-col gap-2 rounded-lg overflow-y-scroll;
-    transition: all 1s ease-in;
+    @apply border border-white/50 my-2 flex flex-col gap-2 rounded-lg;
+    transition: all .5s ease;
 }
 .cleander::-webkit-scrollbar{
     width: 10px;
@@ -223,10 +240,10 @@ export default{
     @apply bg-white text-brand rounded-full;
 }
 .blurHide{
-    @apply sticky -bottom-1 pt-4 pb-1 bg-gradient-to-t from-black/70 to-black/0 text-center text-3xl rounded-t-lg;
+    @apply sticky -bottom-1 pt-1 pb-1 bg-gradient-to-t from-brand/90 via-brand/80 to-brand/10 text-center text-3xl rounded-t-lg;
 }
 .btnShow{
     @apply cursor-pointer block;
-    transition: all .8s ease;
+    transition: all .5s ease;
 }
 </style>
