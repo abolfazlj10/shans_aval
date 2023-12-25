@@ -20,3 +20,6 @@ body{
   direction: rtl;
   font-family: vazirbold;
 }
+[v-cloak]{
+  display: none;
+}

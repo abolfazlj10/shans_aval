@@ -16,7 +16,7 @@ export default{
             isShow:false,
             showCleander:[],
             SDSMC:{gapCleander:null,maxWidthMonth:null,heightBlurHider:null}, // name = style display show month of cleander
-        }
+            }
     },
     methods:{
         async SendReq(){
@@ -90,19 +90,16 @@ export default{
             }
             return monthLottery
         },
-        isLeapYear(year){
-            return new persianDate([year]).isLeapYear()
-        },
         getHeightMonth(){
             this.$nextTick(()=>{
                 const cleanderElem = this.$refs.cleander[0]
                 this.SDSMC.gapCleander = this.removerPX(window.getComputedStyle(cleanderElem).gap)                
-
+    
                 const monthElem = this.$refs.monthCleander[0]
                 let heightElem = this.removerPX(window.getComputedStyle(monthElem).height)
                 let PaddingElem = this.removerPX(window.getComputedStyle(monthElem).padding)
                 this.SDSMC.maxWidthMonth = heightElem + PaddingElem
-
+    
                 const blurHideElem = this.$refs.blurHide[0]
                 const blurHideHeight = this.removerPX(window.getComputedStyle(blurHideElem).height)
                 const blurHidePadding = this.removerPX(window.getComputedStyle(blurHideElem).paddingTop)
@@ -110,8 +107,8 @@ export default{
             })
         },
         showHideClenader(month){
-            const isShow = this.showCleander.includes(month)
-            if(!isShow){
+            const isShowCleander = this.showCleander.includes(month)
+            if(!isShowCleander){
                 this.showCleander.push(month)
             }else{
                 const index = this.showCleander.indexOf(month)
@@ -141,31 +138,33 @@ export default{
         priceChar(num){
             const price = Num2persian(num) + ' تومان'
             return price
-        }
+        },
+        isLeapYear(year){
+            return new persianDate([year]).isLeapYear()
+        },
     },
     async created(){
-        this.isShow = false
+        this.isShow = await false
         await this.SendReq()
-        await this.dateStartAndEnd()
-        this.isShow = true
-        this.getHeightMonth()
+        await this.dateStartAndEnd() // date start and end lottery 
+        this.isShow = await true
+        await this.getHeightMonth()
     },
     components:{Nav,loader}
 }
 </script>
 <template>
-    <div v-if="!isShow"></div>
-    <div v-else>
-        <Nav />
+    <div v-if="isShow">
+        <Nav /> 
         <div class="container mt-10">
-            <div class="boxDesc">
+                        <div class="boxDesc">
                 <div class="contentDesc">
                     <div class="text-2xl">قرعه کشی ها</div>
                     <div>لیست تمامی قرعه کشی های پلفترم شانس اول</div>
                     <div>
                         <div class="text-right mb-4">جدیدترین ها</div>
                         <ul class="recumendedLottery">
-                            <div v-for="(item,i) in lotterys" v-show="(lotterys.length-3) <= i">
+                            <div v-for="(item,i) in lotterys" v-show="(lotterys.length-3) <= i" :key="item.id">
                                 <li @click="scrollBookMark(item.id)" class="cursor-pointer">{{ i +1 }}) {{ item.name }}</li>
                                 <div class="text-xs opacity-80 mr-4">مدیر: {{ item.owner }}</div>
                             </div>
@@ -179,7 +178,7 @@ export default{
                 <img class="imageDesc" src="../../public/wheel of luck.jpg">
             </div>
             <div class="lotterys">
-                <div v-for="lottery in lotterys" class="boxLottery" ref="lottery">
+                <div v-for="(lottery,i) in lotterys" class="boxLottery" ref="lottery" :key="lottery.id">
                     <div class="flex justify-between">
                         <div class="text-xl">{{ lottery.name }}</div>
                         <div class="flex gap-1 border border-white/30 p-1 rounded">
@@ -187,22 +186,23 @@ export default{
                             <i class="ri-account-circle-line"></i>
                         </div>
                     </div>
-                    <div class="cleander" ref="cleander" 
-                    :class="lottery.month.length >= 5 && 'overflow-y-scroll'" :style="[((!isCleanderShow(lottery.id) && lottery.month.length >= 5) && `height:${SDSMC.maxWidthMonth*5}px;`),((isCleanderShow(lottery.id) && lottery.month.length >= 5) && `height:${(SDSMC.maxWidthMonth*lottery.month.length)+SDSMC.heightBlurHider-SDSMC.gapCleander}px`)]"
+                    <div class="cleander" ref="cleander"
+                    :class="lottery.month.length >= 5 && 'overflow-y-scroll'" :style="[((!isCleanderShow(lottery.id) && lottery.month.length >= 5) && `height:${SDSMC.maxWidthMonth*5}px;`),
+                    ((isCleanderShow(lottery.id) && lottery.month.length >= 5) && `height:${(SDSMC.maxWidthMonth*lottery.month.length)+SDSMC.heightBlurHider-SDSMC.gapCleander}px`)]"
                     >
-                        <div class="monthCleander" v-for="(month,index) in lottery.month" :class="lottery.month.length == (index+1) && 'border-none'"  ref="monthCleander">
+                        <div class="monthCleander" v-for="(month,index) in lottery.month" :class="lottery.month.length == (index+1) && 'border-none'"  ref="monthCleander" :key="index">
                             <div class="grid grid-cols-[80px_40px_1fr] items-center">
                                 <div>{{ month.month }}</div>
                                 <sub class="mr-1 text-[11px]"> {{ month.year }} </sub>:
                             </div>
                             <div class="w-full grid grid-cols-[repeat(31,1fr)] text-center">
-                                <div v-for="i in month.day" class="py-2 px-3 flex justify-center gap-1"
-                                :class="[((lottery.date == i && !month.justShow)&& 'markDate'),
-                                ((!isLeapYear(month.year) && month.month == 'اسفند' && lottery.date == 30 && i == 29 && !month.justShow) && 'markDate'),
-                                ((date.day == i && month.month == months[date.month-1] && date.year == month.year) && 'border border-green-300 rounded-full relative')]"
+                                <div v-for="day in month.day" class="py-2 px-3 flex justify-center gap-1" :key="day" v-cloak
+                                :class="[((lottery.date == day && !month.justShow)&& 'markDate'),
+                                ((!isLeapYear(month.year) && month.month == 'اسفند' && lottery.date == 30 && day == 29 && !month.justShow) && 'markDate'),
+                                ((date.day == day && month.month == months[date.month-1] && date.year == month.year) && 'border border-green-300 rounded-full relative')]"
                                 >
-                                    <i v-if="date.day == i && month.month == months[date.month-1] && date.year == month.year" class="ri-bookmark-fill text-green-300 absolute -top-1 -right-1"></i>
-                                    <div>{{ i }}</div>
+                                    <i v-if="date.day == day && month.month == months[date.month-1] && date.year == month.year" class="ri-bookmark-fill text-green-300 absolute -top-1 -right-1"></i>
+                                    <div>{{ day }}</div>
                                 </div>
                             </div>
                         </div>
@@ -288,7 +288,7 @@ export default{
                             </div>
                             <div class="dataInfo justify-end text-xl">
                                 <div class="widthBox flex flex-row-reverse justify-around items-center rounded-md px-4 py-4 gap-3 bg-[#1E96FC]">
-                                    <div class="">{{ (Math.floor(lottery.price / lottery.people)).toLocaleString('en-US') }}</div>
+                                    <div>{{ (Math.floor(lottery.price / lottery.people)).toLocaleString('en-US') }}</div>
                                     <i class="ri-money-dollar-circle-line text-2xl border-l border-white/50 pl-5"></i>
                                 </div>
                             </div>
@@ -383,5 +383,8 @@ export default{
 }
 .widthBox{
     @apply w-60;
+}
+.dayMonth{
+    @apply py-2 px-3 flex justify-center gap-1;
 }
 </style>
