@@ -1,4 +1,5 @@
 <script>
+import monthLotterys from '../components/monthLotterys.vue'
 import Nav from '../components/nav.vue';
 import Num2persian from 'num2persian'
 import persianDate from 'persian-date';
@@ -16,6 +17,7 @@ export default{
             isShow:false,
             showCleander:[],
             SDSMC:{gapCleander:null,maxWidthMonth:null,heightBlurHider:null}, // name = style display show month of cleander
+            showtest:false,
             }
     },
     methods:{
@@ -150,14 +152,16 @@ export default{
         this.isShow = await true
         await this.getHeightMonth()
     },
-    components:{Nav,loader}
+    components:{Nav,loader,monthLotterys}
 }
 </script>
 <template>
     <div v-if="isShow">
         <Nav /> 
         <div class="container mt-10">
-                        <div class="boxDesc">
+            <button @mouseover="showtest = true" @mouseleave="showtest = false">ClickMe</button>
+            <div v-if="showtest">ON</div>
+            <div class="boxDesc">
                 <div class="contentDesc">
                     <div class="text-2xl">قرعه کشی ها</div>
                     <div>لیست تمامی قرعه کشی های پلفترم شانس اول</div>
@@ -190,22 +194,13 @@ export default{
                     :class="lottery.month.length >= 5 && 'overflow-y-scroll'" :style="[((!isCleanderShow(lottery.id) && lottery.month.length >= 5) && `height:${SDSMC.maxWidthMonth*5}px;`),
                     ((isCleanderShow(lottery.id) && lottery.month.length >= 5) && `height:${(SDSMC.maxWidthMonth*lottery.month.length)+SDSMC.heightBlurHider-SDSMC.gapCleander}px`)]"
                     >
-                        <div class="monthCleander" v-for="(month,index) in lottery.month" :class="lottery.month.length == (index+1) && 'border-none'"  ref="monthCleander" :key="index">
-                            <div class="grid grid-cols-[80px_40px_1fr] items-center">
-                                <div>{{ month.month }}</div>
-                                <sub class="mr-1 text-[11px]"> {{ month.year }} </sub>:
-                            </div>
-                            <div class="w-full grid grid-cols-[repeat(31,1fr)] text-center">
-                                <div v-for="day in month.day" class="py-2 px-3 flex justify-center gap-1" :key="day" v-cloak
-                                :class="[((lottery.date == day && !month.justShow)&& 'markDate'),
-                                ((!isLeapYear(month.year) && month.month == 'اسفند' && lottery.date == 30 && day == 29 && !month.justShow) && 'markDate'),
-                                ((date.day == day && month.month == months[date.month-1] && date.year == month.year) && 'border border-green-300 rounded-full relative')]"
-                                >
-                                    <i v-if="date.day == day && month.month == months[date.month-1] && date.year == month.year" class="ri-bookmark-fill text-green-300 absolute -top-1 -right-1"></i>
-                                    <div>{{ day }}</div>
-                                </div>
-                            </div>
+                    <div class="monthCleander" v-for="(month,index) in lottery.month" :class="lottery.month.length == (index+1) && 'border-none'"  ref="monthCleander" :key="index">
+                        <div class="grid grid-cols-[80px_40px_1fr] items-center">
+                            <div>{{ month.month }}</div>
+                            <sub class="mr-1 text-[11px]"> {{ month.year }} </sub>:
                         </div>
+                        <monthLotterys :lottery="lottery" :month="month" class="py-2 px-3 flex justify-center gap-1"/>
+                        </div> 
                         <div class="blurHide" ref="blurHide" v-if="lottery.month.length >= 5">
                             <i @click="showHideClenader('Cleander_'+lottery.id)" class="ri-arrow-up-s-line btnShow" :class="!isCleanderShow(lottery.id) && 'rotate-180'"></i>
                         </div>
