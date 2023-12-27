@@ -12,24 +12,26 @@ export default{
             },
             isToday:0,
             months:["فروردین", "اردیبهشت", "خرداد", "تیر", "مرداد", "شهریور", "مهر", "آبان", "آذر", "دی", "بهمن", "اسفند"],
+            test:null,
         }
     },
     methods:{
-        
+        isLeapYear(year){
+            return new persianDate([year]).isLeapYear()
+        },
     },
     created(){
-        this.$nextTick(()=>{  
+        this.$nextTick(()=>{ 
             for (let i = 1; i <= 31; i++) {
                 const elem = this.$refs['num'+i]
-                if (this.lottery.date == i && !this.lottery.month.justShow)
+                if (this.lottery.date == i && !this.lottery.month.justShow && this.month.day >= i)
                     elem.$el.className += ' markDate'
-                if(this.date.day == i && this.month.month == this.months[this.date.month-1] && this.date.year == this.month.year){
+                if(this.date.day == i && this.month.month == this.months[this.date.month-1] && this.date.year == this.month.year && this.month.day >= i){
                     elem.$el.className += ' today'
                     this.isToday = i
                 }
-
-                // if(!this.isLeapYear(this.lottery.month.year) && this.lottery.month.month == 'اسفند' && this.lottery.date == 30 && this.lottery.day == 29 && !this.lottery.month.justShow)
-                //     elem.className += 'markDate'
+                if(!this.isLeapYear(this.month.year) && this.month.month == 'اسفند' && this.lottery.date == 30 && this.month.day == 29 && !this.month.justShow && i == 29)
+                    elem.$el.className += ' markDate'
             }
         })
     },
@@ -66,9 +68,9 @@ export default{
         <dayMonthLottery class="day" ref="num26" num="26" :today="isToday" />
         <dayMonthLottery class="day" ref="num27" num="27" :today="isToday" />
         <dayMonthLottery class="day" ref="num28" num="28" :today="isToday" />
-        <dayMonthLottery class="day" ref="num29" num="29" :today="isToday" />
-        <dayMonthLottery class="day" ref="num30" num="30" :today="isToday" />
-        <dayMonthLottery class="day" ref="num31" num="31" :today="isToday" />
+        <dayMonthLottery v-if="month.day >= 29" class="day" ref="num29" num="29" :today="isToday" />
+        <dayMonthLottery v-if="month.day >= 30" class="day" ref="num30" num="30" :today="isToday" />
+        <dayMonthLottery v-if="month.day >= 31" class="day" ref="num31" num="31" :today="isToday" />
     </div>
 </template>
 <style>
@@ -76,7 +78,7 @@ export default{
     @apply bg-white text-brand rounded-full;
 }
 .day{
-    @apply py-2 px-3 flex justify-center gap-1;
+    @apply py-2 px-2 flex justify-center gap-1;
 }
 .today{
     @apply border border-green-300 rounded-full relative;

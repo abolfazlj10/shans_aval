@@ -9,6 +9,3 @@ export default{
         <div>{{ num }}</div>
     </div>
 </template>
-<style scoped>
-
-</style>
