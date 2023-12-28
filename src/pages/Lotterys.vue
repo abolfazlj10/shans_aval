@@ -7,17 +7,17 @@ import loader from '../components/loader.vue'
 export default{
     data(){
         return{
-            lotterys:[],
-            date:{
-                year:new persianDate().year(),
-                month:new persianDate().month(),
-                day:new persianDate().date()
-            },
-            months:["فروردین", "اردیبهشت", "خرداد", "تیر", "مرداد", "شهریور", "مهر", "آبان", "آذر", "دی", "بهمن", "اسفند"],
-            isShow:false,
-            showCleander:[],
-            SDSMC:{gapCleander:null,maxWidthMonth:null,heightBlurHider:null}, // name = style display show month of cleander
-            showtest:false,
+                lotterys:[],
+                date:{
+                    year:new persianDate().year(),
+                    month:new persianDate().month(),
+                    day:new persianDate().date()
+                },
+                months:["فروردین", "اردیبهشت", "خرداد", "تیر", "مرداد", "شهریور", "مهر", "آبان", "آذر", "دی", "بهمن", "اسفند"],
+                isShow:false,
+                showCleander:[],
+                SDSMC:{gapCleander:null,maxWidthMonth:null,heightBlurHider:null}, // name = style display show month of cleander
+                tooltip:{show:false,position:0}
             }
     },
     methods:{
@@ -144,6 +144,16 @@ export default{
         isLeapYear(year){
             return new persianDate([year]).isLeapYear()
         },
+        tooltipSet($event){
+            const top = ($event.target.offsetTop + $event.target.scrollTop) - 70
+            const left = ($event.target.offsetLeft + $event.target.scrollLeft) - 20
+
+            this.tooltip.position = {y:top,x:left}
+            this.tooltip.show = true
+        },
+        hideTooltip(){
+            this.tooltip.show = false
+        }
     },
     async created(){
         this.isShow = await false
@@ -159,8 +169,6 @@ export default{
     <div v-if="isShow">
         <Nav /> 
         <div class="container mt-10">
-            <button @mouseover="showtest = true" @mouseleave="showtest = false">ClickMe</button>
-            <div v-if="showtest">ON</div>
             <div class="boxDesc">
                 <div class="contentDesc">
                     <div class="text-2xl">قرعه کشی ها</div>
@@ -199,7 +207,7 @@ export default{
                             <div>{{ month.month }}</div>
                             <sub class="mr-1 text-[11px]"> {{ month.year }} </sub>:
                         </div>
-                        <monthLotterys :lottery="lottery" :month="month" class="py-2 px-3 flex justify-center gap-1"/>
+                        <monthLotterys @setTooltip="tooltipSet($event)" @hideTooltip="hideTooltip" :lottery="lottery" :month="month" class="py-2 px-3 flex justify-center gap-1"/>
                         </div> 
                         <div class="blurHide" ref="blurHide" v-if="lottery.month.length >= 5">
                             <i @click="showHideClenader('Cleander_'+lottery.id)" class="ri-arrow-up-s-line btnShow" :class="!isCleanderShow(lottery.id) && 'rotate-180'"></i>
@@ -292,6 +300,9 @@ export default{
                 </div>
             </div>
         </div>
+        <div v-if="tooltip.show" :style="'top:'+(tooltip.position.y)+'px;left:'+(tooltip.position.x)+'px;'" class="tooltip">
+            tooltip
+        </div>
     </div>
 </template>
 <style scoped>
@@ -381,5 +392,8 @@ export default{
 }
 .dayMonth{
     @apply py-2 px-3 flex justify-center gap-1;
+}
+.tooltip{
+    @apply bg-brd shadow-2xl p-5 absolute top-1 rounded-lg;
 }
 </style>
