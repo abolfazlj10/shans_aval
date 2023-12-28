@@ -300,7 +300,7 @@ export default{
                 </div>
             </div>
         </div>
-        <div v-if="tooltip.show" :style="'top:'+(tooltip.position.y)+'px;left:'+(tooltip.position.x)+'px;'" class="tooltip">
+        <div v-show="tooltip.show" :style="'top:'+(tooltip.position.y)+'px;left:'+(tooltip.position.x)+'px;'" class="tooltip">
             tooltip
         </div>
     </div>

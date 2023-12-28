@@ -24,7 +24,16 @@ export default{
         },
         hideTooltip(){
             this.$emit('hideTooltip')
-        }
+        },
+        checkLeapTooltip(){
+            return !this.isLeapYear(this.month.year) && this.lottery.date == 30 && this.month.month == 'اسفند' && this.month.day == 29 && !this.month.justShow
+        },
+        showTooltipCondition(day,$event){
+            (this.lottery.date == day || (this.date.year == this.month.year && this.months[this.date.month-1] == this.month.month && day == this.date.day )) && this.showTooltip($event)
+        },
+        hideTooltipCondition(day){
+            (this.lottery.date == day || (this.date.year == this.month.year && this.months[this.date.month-1] == this.month.month && day == this.date.day )) && this.hideTooltip()
+        },
     },
     created(){
         this.$nextTick(()=>{ 
@@ -44,39 +53,39 @@ export default{
     components:{dayMonthLottery}
 }
 </script>
-<template>
+<template> 
     <div class="w-full grid grid-cols-[repeat(31,1fr)] text-center">
-        <dayMonthLottery class="day" @mouseenter="lottery.date == 1 && showTooltip($event)" @mouseleave="lottery.date == 1 && hideTooltip()" ref="num1" num="1" :today="isToday" />
-        <dayMonthLottery class="day" @mouseenter="lottery.date == 2 && showTooltip($event)" @mouseleave="lottery.date == 2 && hideTooltip()" ref="num2" num="2" :today="isToday" />
-        <dayMonthLottery class="day" @mouseenter="lottery.date == 3 && showTooltip($event)" @mouseleave="lottery.date == 3 && hideTooltip()" ref="num3" num="3" :today="isToday" />
-        <dayMonthLottery class="day" @mouseenter="lottery.date == 4 && showTooltip($event)" @mouseleave="lottery.date == 4 && hideTooltip()" ref="num4" num="4" :today="isToday" />
-        <dayMonthLottery class="day" @mouseenter="lottery.date == 5 && showTooltip($event)" @mouseleave="lottery.date == 5 && hideTooltip()" ref="num5" num="5" :today="isToday" />
-        <dayMonthLottery class="day" @mouseenter="lottery.date == 6 && showTooltip($event)" @mouseleave="lottery.date == 6 && hideTooltip()" ref="num6" num="6" :today="isToday" />
-        <dayMonthLottery class="day" @mouseenter="lottery.date == 7 && showTooltip($event)" @mouseleave="lottery.date == 7 && hideTooltip()" ref="num7" num="7" :today="isToday" />
-        <dayMonthLottery class="day" @mouseenter="lottery.date == 8 && showTooltip($event)" @mouseleave="lottery.date == 8 && hideTooltip()" ref="num8" num="8" :today="isToday" />
-        <dayMonthLottery class="day" @mouseenter="lottery.date == 9 && showTooltip($event)" @mouseleave="lottery.date == 9 && hideTooltip()" ref="num9" num="9" :today="isToday" />
-        <dayMonthLottery class="day" @mouseenter="lottery.date == 10 && showTooltip($event)" @mouseleave="lottery.date == 10 && hideTooltip()" ref="num10" num="10" :today="isToday" />
-        <dayMonthLottery class="day" @mouseenter="lottery.date == 11 && showTooltip($event)" @mouseleave="lottery.date == 11 && hideTooltip()" ref="num11" num="11" :today="isToday" />
-        <dayMonthLottery class="day" @mouseenter="lottery.date == 12 && showTooltip($event)" @mouseleave="lottery.date == 12 && hideTooltip()" ref="num12" num="12" :today="isToday" />
-        <dayMonthLottery class="day" @mouseenter="lottery.date == 13 && showTooltip($event)" @mouseleave="lottery.date == 13 && hideTooltip()" ref="num13" num="13" :today="isToday" />
-        <dayMonthLottery class="day" @mouseenter="lottery.date == 14 && showTooltip($event)" @mouseleave="lottery.date == 14 && hideTooltip()" ref="num14" num="14" :today="isToday" />
-        <dayMonthLottery class="day" @mouseenter="lottery.date == 15 && showTooltip($event)" @mouseleave="lottery.date == 15 && hideTooltip()" ref="num15" num="15" :today="isToday" />
-        <dayMonthLottery class="day" @mouseenter="lottery.date == 16 && showTooltip($event)" @mouseleave="lottery.date == 16 && hideTooltip()" ref="num16" num="16" :today="isToday" />
-        <dayMonthLottery class="day" @mouseenter="lottery.date == 17 && showTooltip($event)" @mouseleave="lottery.date == 17 && hideTooltip()" ref="num17" num="17" :today="isToday" />
-        <dayMonthLottery class="day" @mouseenter="lottery.date == 18 && showTooltip($event)" @mouseleave="lottery.date == 18 && hideTooltip()" ref="num18" num="18" :today="isToday" />
-        <dayMonthLottery class="day" @mouseenter="lottery.date == 19 && showTooltip($event)" @mouseleave="lottery.date == 19 && hideTooltip()" ref="num19" num="19" :today="isToday" />
-        <dayMonthLottery class="day" @mouseenter="lottery.date == 20 && showTooltip($event)" @mouseleave="lottery.date == 20 && hideTooltip()" ref="num20" num="20" :today="isToday" />
-        <dayMonthLottery class="day" @mouseenter="lottery.date == 21 && showTooltip($event)" @mouseleave="lottery.date == 21 && hideTooltip()" ref="num21" num="21" :today="isToday" />
-        <dayMonthLottery class="day" @mouseenter="lottery.date == 22 && showTooltip($event)" @mouseleave="lottery.date == 22 && hideTooltip()" ref="num22" num="22" :today="isToday" />
-        <dayMonthLottery class="day" @mouseenter="lottery.date == 23 && showTooltip($event)" @mouseleave="lottery.date == 23 && hideTooltip()" ref="num23" num="23" :today="isToday" />
-        <dayMonthLottery class="day" @mouseenter="lottery.date == 24 && showTooltip($event)" @mouseleave="lottery.date == 24 && hideTooltip()" ref="num24" num="24" :today="isToday" />
-        <dayMonthLottery class="day" @mouseenter="lottery.date == 25 && showTooltip($event)" @mouseleave="lottery.date == 25 && hideTooltip()" ref="num25" num="25" :today="isToday" />
-        <dayMonthLottery class="day" @mouseenter="lottery.date == 26 && showTooltip($event)" @mouseleave="lottery.date == 26 && hideTooltip()" ref="num26" num="26" :today="isToday" />
-        <dayMonthLottery class="day" @mouseenter="lottery.date == 27 && showTooltip($event)" @mouseleave="lottery.date == 27 && hideTooltip()" ref="num27" num="27" :today="isToday" />
-        <dayMonthLottery class="day" @mouseenter="lottery.date == 28 && showTooltip($event)" @mouseleave="lottery.date == 28 && hideTooltip()" ref="num28" num="28" :today="isToday" />
-        <dayMonthLottery v-if="month.day >= 29" class="day" @mouseenter="lottery.date == 29 && showTooltip($event)" @mouseleave="lottery.date == 29 && hideTooltip()" ref="num29" num="29" :today="isToday" />
-        <dayMonthLottery v-if="month.day >= 30" class="day" @mouseenter="lottery.date == 30 && showTooltip($event)" @mouseleave="lottery.date == 30 && hideTooltip()" ref="num30" num="30" :today="isToday" />
-        <dayMonthLottery v-if="month.day >= 31" class="day" @mouseenter="lottery.date == 31 && showTooltip($event)" @mouseleave="lottery.date == 31 && hideTooltip()" ref="num31" num="31" :today="isToday" />
+        <dayMonthLottery class="day" @mouseenter="showTooltipCondition(1,$event)" @mouseleave="hideTooltipCondition(1)" ref="num1" num="1" :today="isToday" />
+        <dayMonthLottery class="day" @mouseenter="showTooltipCondition(2,$event)" @mouseleave="hideTooltipCondition(2)" ref="num2" num="2" :today="isToday" />
+        <dayMonthLottery class="day" @mouseenter="showTooltipCondition(3,$event)" @mouseleave="hideTooltipCondition(3)" ref="num3" num="3" :today="isToday" />
+        <dayMonthLottery class="day" @mouseenter="showTooltipCondition(4,$event)" @mouseleave="hideTooltipCondition(4)" ref="num4" num="4" :today="isToday" />
+        <dayMonthLottery class="day" @mouseenter="showTooltipCondition(5,$event)" @mouseleave="hideTooltipCondition(5)" ref="num5" num="5" :today="isToday" />
+        <dayMonthLottery class="day" @mouseenter="showTooltipCondition(6,$event)" @mouseleave="hideTooltipCondition(6)" ref="num6" num="6" :today="isToday" />
+        <dayMonthLottery class="day" @mouseenter="showTooltipCondition(7,$event)" @mouseleave="hideTooltipCondition(7)" ref="num7" num="7" :today="isToday" />
+        <dayMonthLottery class="day" @mouseenter="showTooltipCondition(8,$event)" @mouseleave="hideTooltipCondition(8)" ref="num8" num="8" :today="isToday" />
+        <dayMonthLottery class="day" @mouseenter="showTooltipCondition(9,$event)" @mouseleave="hideTooltipCondition(9)" ref="num9" num="9" :today="isToday" />
+        <dayMonthLottery class="day" @mouseenter="showTooltipCondition(10,$event)" @mouseleave="hideTooltipCondition(10)" ref="num10" num="10" :today="isToday" />
+        <dayMonthLottery class="day" @mouseenter="showTooltipCondition(11,$event)" @mouseleave="hideTooltipCondition(11)" ref="num11" num="11" :today="isToday" />
+        <dayMonthLottery class="day" @mouseenter="showTooltipCondition(12,$event)" @mouseleave="hideTooltipCondition(12)" ref="num12" num="12" :today="isToday" />
+        <dayMonthLottery class="day" @mouseenter="showTooltipCondition(13,$event)" @mouseleave="hideTooltipCondition(13)" ref="num13" num="13" :today="isToday" />
+        <dayMonthLottery class="day" @mouseenter="showTooltipCondition(14,$event)" @mouseleave="hideTooltipCondition(14)" ref="num14" num="14" :today="isToday" />
+        <dayMonthLottery class="day" @mouseenter="showTooltipCondition(15,$event)" @mouseleave="hideTooltipCondition(15)" ref="num15" num="15" :today="isToday" />
+        <dayMonthLottery class="day" @mouseenter="showTooltipCondition(16,$event)" @mouseleave="hideTooltipCondition(16)" ref="num16" num="16" :today="isToday" />
+        <dayMonthLottery class="day" @mouseenter="showTooltipCondition(17,$event)" @mouseleave="hideTooltipCondition(17)" ref="num17" num="17" :today="isToday" />
+        <dayMonthLottery class="day" @mouseenter="showTooltipCondition(18,$event)" @mouseleave="hideTooltipCondition(18)" ref="num18" num="18" :today="isToday" />
+        <dayMonthLottery class="day" @mouseenter="showTooltipCondition(19,$event)" @mouseleave="hideTooltipCondition(19)" ref="num19" num="19" :today="isToday" />
+        <dayMonthLottery class="day" @mouseenter="showTooltipCondition(20,$event)" @mouseleave="hideTooltipCondition(20)" ref="num20" num="20" :today="isToday" />
+        <dayMonthLottery class="day" @mouseenter="showTooltipCondition(21,$event)" @mouseleave="hideTooltipCondition(21)" ref="num21" num="21" :today="isToday" />
+        <dayMonthLottery class="day" @mouseenter="showTooltipCondition(22,$event)" @mouseleave="hideTooltipCondition(22)" ref="num22" num="22" :today="isToday" />
+        <dayMonthLottery class="day" @mouseenter="showTooltipCondition(23,$event)" @mouseleave="hideTooltipCondition(23)" ref="num23" num="23" :today="isToday" />
+        <dayMonthLottery class="day" @mouseenter="showTooltipCondition(24,$event)" @mouseleave="hideTooltipCondition(24)" ref="num24" num="24" :today="isToday" />
+        <dayMonthLottery class="day" @mouseenter="showTooltipCondition(25,$event)" @mouseleave="hideTooltipCondition(25)" ref="num25" num="25" :today="isToday" />
+        <dayMonthLottery class="day" @mouseenter="showTooltipCondition(26,$event)" @mouseleave="hideTooltipCondition(26)" ref="num26" num="26" :today="isToday" />
+        <dayMonthLottery class="day" @mouseenter="showTooltipCondition(27,$event)" @mouseleave="hideTooltipCondition(27)" ref="num27" num="27" :today="isToday" />
+        <dayMonthLottery class="day" @mouseenter="showTooltipCondition(28,$event)" @mouseleave="hideTooltipCondition(28)" ref="num28" num="28" :today="isToday" />
+        <dayMonthLottery v-if="month.day >= 29" class="day" @mouseenter="showTooltipCondition(29,$event); checkLeapTooltip() && showTooltip($event)" @mouseleave="hideTooltipCondition(29); checkLeapTooltip() && hideTooltip()" ref="num29" num="29" :today="isToday" />
+        <dayMonthLottery v-if="month.day >= 30" class="day" @mouseenter="showTooltipCondition(30,$event)" @mouseleave="hideTooltipCondition(30)" ref="num30" num="30" :today="isToday" />
+        <dayMonthLottery v-if="month.day >= 31" class="day" @mouseenter="showTooltipCondition(31,$event)" @mouseleave="hideTooltipCondition(31)" ref="num31" num="31" :today="isToday" />
     </div>
 </template>
 <style>
@@ -84,7 +93,7 @@ export default{
     @apply bg-white text-brand rounded-full cursor-pointer;
 }
 .day{
-    @apply py-2 px-2 flex justify-center gap-1;
+    @apply py-2 px-2 flex justify-center gap-1 cursor-pointer;
 }
 .today{
     @apply border border-green-300 rounded-full relative;
