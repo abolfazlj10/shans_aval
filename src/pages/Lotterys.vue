@@ -147,7 +147,7 @@ export default{
         },
         async tooltipSet($event,status,date){
             const top = ($event.target.offsetTop + $event.target.scrollTop) - (status != 'today' ? 130 : 130) 
-            const left = ($event.target.offsetLeft + $event.target.scrollLeft) - 50
+            const left = ($event.target.offsetLeft + $event.target.scrollLeft) - this.iconDown
             
             this.tooltip.status = status
             this.tooltip.date = date
@@ -183,7 +183,8 @@ export default{
 }
 </script>
 <template>
-    <div v-if="isShow">
+    <loader v-if="!isShow"/>
+    <div v-else>
         <Nav /> 
         <div class="container mt-10">
             <div class="boxDesc">
