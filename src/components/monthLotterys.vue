@@ -86,7 +86,7 @@ export default{
         <dayMonthLottery class="day" @mouseenter="showTooltipCondition(26,$event)" @mouseleave="hideTooltipCondition(26)" ref="num26" num="26" :today="isToday" />
         <dayMonthLottery class="day" @mouseenter="showTooltipCondition(27,$event)" @mouseleave="hideTooltipCondition(27)" ref="num27" num="27" :today="isToday" />
         <dayMonthLottery class="day" @mouseenter="showTooltipCondition(28,$event)" @mouseleave="hideTooltipCondition(28)" ref="num28" num="28" :today="isToday" />
-        <dayMonthLottery v-if="month.day >= 29" class="day" @mouseenter="showTooltipCondition(29,$event); checkLeapTooltip() && showTooltip($event)" @mouseleave="hideTooltipCondition(29); checkLeapTooltip() && hideTooltip()" ref="num29" num="29" :today="isToday" />
+        <dayMonthLottery v-if="month.day >= 29" class="day" @mouseenter="showTooltipCondition(29,$event); checkLeapTooltip() && showTooltip($event,'dayLottery',[29,month.month,month.year])" @mouseleave="hideTooltipCondition(29); checkLeapTooltip() && hideTooltip()" ref="num29" num="29" :today="isToday" />
         <dayMonthLottery v-if="month.day >= 30" class="day" @mouseenter="showTooltipCondition(30,$event)" @mouseleave="hideTooltipCondition(30)" ref="num30" num="30" :today="isToday" />
         <dayMonthLottery v-if="month.day >= 31" class="day" @mouseenter="showTooltipCondition(31,$event)" @mouseleave="hideTooltipCondition(31)" ref="num31" num="31" :today="isToday" />
     </div>
