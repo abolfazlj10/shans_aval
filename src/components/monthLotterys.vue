@@ -12,15 +12,14 @@ export default{
             },
             isToday:0,
             months:["فروردین", "اردیبهشت", "خرداد", "تیر", "مرداد", "شهریور", "مهر", "آبان", "آذر", "دی", "بهمن", "اسفند"],
-            test:null,
         }
     },
     methods:{
         isLeapYear(year){
             return new persianDate([year]).isLeapYear()
         },
-        showTooltip($event){
-            this.$emit('setTooltip',$event)
+        showTooltip($event,status,date){
+            this.$emit('setTooltip',$event,status,date)
         },
         hideTooltip(){
             this.$emit('hideTooltip')
@@ -29,7 +28,11 @@ export default{
             return !this.isLeapYear(this.month.year) && this.lottery.date == 30 && this.month.month == 'اسفند' && this.month.day == 29 && !this.month.justShow
         },
         showTooltipCondition(day,$event){
-            (this.lottery.date == day || (this.date.year == this.month.year && this.months[this.date.month-1] == this.month.month && day == this.date.day )) && this.showTooltip($event)
+            if(this.date.year == this.month.year && this.months[this.date.month-1] == this.month.month && day == this.date.day)
+                this.$emit('setTooltip',$event,'today')
+            if(this.lottery.date == day)
+                this.$emit('setTooltip',$event,'dayLottery',[day,this.month.month,this.month.year])
+
         },
         hideTooltipCondition(day){
             (this.lottery.date == day || (this.date.year == this.month.year && this.months[this.date.month-1] == this.month.month && day == this.date.day )) && this.hideTooltip()
@@ -93,7 +96,7 @@ export default{
     @apply bg-white text-brand rounded-full cursor-pointer;
 }
 .day{
-    @apply py-2 px-2 flex justify-center gap-1 cursor-pointer;
+    @apply py-2 px-2 flex justify-center gap-1 cursor-pointer ;
 }
 .today{
     @apply border border-green-300 rounded-full relative;

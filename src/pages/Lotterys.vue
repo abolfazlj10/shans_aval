@@ -17,7 +17,8 @@ export default{
                 isShow:false,
                 showCleander:[],
                 SDSMC:{gapCleander:null,maxWidthMonth:null,heightBlurHider:null}, // name = style display show month of cleander
-                tooltip:{show:false,position:0}
+                tooltip:{show:false,position:0,status:null,date:null},
+                iconDown:0,
             }
     },
     methods:{
@@ -144,15 +145,31 @@ export default{
         isLeapYear(year){
             return new persianDate([year]).isLeapYear()
         },
-        tooltipSet($event){
-            const top = ($event.target.offsetTop + $event.target.scrollTop) - 70
-            const left = ($event.target.offsetLeft + $event.target.scrollLeft) - 20
-
+        async tooltipSet($event,status,date){
+            const top = ($event.target.offsetTop + $event.target.scrollTop) - (status != 'today' ? 130 : 130) 
+            const left = ($event.target.offsetLeft + $event.target.scrollLeft) - 50
+            
+            this.tooltip.status = status
+            this.tooltip.date = date
             this.tooltip.position = {y:top,x:left}
             this.tooltip.show = true
+            this.$nextTick(()=>{
+                this.widthTooltip()
+            })
         },
         hideTooltip(){
             this.tooltip.show = false
+        },
+        widthTooltip(){
+            const iconDown = this.$refs.iconDown
+            const styleID = window.getComputedStyle(iconDown)
+            const widthID = this.removerPX(styleID.width)/2
+
+            const elemTooltip = this.$refs.tooltip
+            const styleT = window.getComputedStyle(elemTooltip)
+            const width = this.removerPX(styleT.width)
+
+            this.iconDown = (width / 2) - widthID
         }
     },
     async created(){
@@ -207,7 +224,7 @@ export default{
                             <div>{{ month.month }}</div>
                             <sub class="mr-1 text-[11px]"> {{ month.year }} </sub>:
                         </div>
-                        <monthLotterys @setTooltip="tooltipSet($event)" @hideTooltip="hideTooltip" :lottery="lottery" :month="month" class="py-2 px-3 flex justify-center gap-1"/>
+                        <monthLotterys @setTooltip="tooltipSet" @hideTooltip="hideTooltip" :lottery="lottery" :month="month" class="py-2 px-3 flex justify-center gap-1"/>
                         </div> 
                         <div class="blurHide" ref="blurHide" v-if="lottery.month.length >= 5">
                             <i @click="showHideClenader('Cleander_'+lottery.id)" class="ri-arrow-up-s-line btnShow" :class="!isCleanderShow(lottery.id) && 'rotate-180'"></i>
@@ -300,9 +317,19 @@ export default{
                 </div>
             </div>
         </div>
-        <div v-show="tooltip.show" :style="'top:'+(tooltip.position.y)+'px;left:'+(tooltip.position.x)+'px;'" class="tooltip">
-            tooltip
-        </div>
+        <Transition name="block">
+            <div ref="tooltip" v-show="tooltip.show" :style="'top:'+(tooltip.position.y)+'px;left:'+(tooltip.position.x)+'px;'" class="tooltip">
+                <div v-if="tooltip.status == 'dayLottery'" class="flex flex-col gap-3">
+                    <div class="text-red-500 text-center">انجام نشده</div>
+                    <div>{{ tooltip.date[0] + ' ' + tooltip.date[1] + ' ' + tooltip.date[2] }}</div>
+                </div>
+                <div v-else class="flex flex-col gap-3">
+                    <div class="text-green-500 text-center">تاریخ امروز</div>
+                    <div>{{ date.day + ' ' + months[date.month-1] + ' ' + date.year }}</div>
+                </div>
+                <i ref="iconDown" class="ri-arrow-down-s-fill downIcon" :style="'left:'+iconDown+'px'"></i>
+            </div>
+        </Transition>
     </div>
 </template>
 <style scoped>
@@ -394,6 +421,37 @@ export default{
     @apply py-2 px-3 flex justify-center gap-1;
 }
 .tooltip{
-    @apply bg-brd shadow-2xl p-5 absolute top-1 rounded-lg;
+    @apply bg-white/40 backdrop-blur-xl shadow-xl py-5 px-8 absolute top-1 rounded-lg;
+
+}
+.downIcon{
+    @apply absolute -bottom-[30px] text-5xl text-white/50 z-[-1];
+}
+.block-enter-active {
+    animation : fade-in .4s ease 
+}
+.block-leave-active {
+    animation : fade-out .4s ease 
+}
+@keyframes fade-in {
+    from {
+        opacity : 0;
+        transform: translateY(30px);
+        z-index: -1;
+    }
+    to {
+        transform: translateY(0);
+        opacity : 1;
+    }
+}
+@keyframes fade-out {
+    from {
+        opacity : 1;
+    }
+    to {
+        opacity : 0;
+        z-index: -1;
+        transform: translateY(30px);
+    }
 }
 </style>
