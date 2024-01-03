@@ -231,6 +231,21 @@ export default{
                             <i @click="showHideClenader('Cleander_'+lottery.id)" class="ri-arrow-up-s-line btnShow" :class="!isCleanderShow(lottery.id) && 'rotate-180'"></i>
                         </div>
                     </div>
+                    <div class="flex gap-[100px] text-xs">
+                        <div class="flex gap-2">
+                            <div class="bg-white status"></div>
+                            <div>قرعه کشی انجام نشده</div>
+                        </div>
+                        <div class="flex gap-2">
+                            <div class="bg-green-300 status"></div>
+                            <div>قرعه کشی انجام شده</div>
+                        </div>
+                        <div class="flex gap-2">
+                            <div class="border border-green-300 status">
+                            </div>
+                            <div>امروز</div>
+                        </div>
+                    </div>
                     <div class="Information">
                         <div class="itemInfo">
                             <div class="dataInfo">
@@ -454,5 +469,8 @@ export default{
         z-index: -1;
         transform: translateY(30px);
     }
+}
+.status{
+    @apply py-1 px-2 rounded-sm;
 }
 </style>
