@@ -318,7 +318,7 @@ export default{
                 </div>
             </div>
         </div>
-        <Transition name="block">
+        <Transition name="fade">
             <div ref="tooltip" v-show="tooltip.show" :style="'top:'+(tooltip.position.y)+'px;left:'+(tooltip.position.x)+'px;'" class="tooltip">
                 <div v-if="tooltip.status == 'dayLottery'" class="flex flex-col gap-3">
                     <div class="text-red-500 text-center">انجام نشده</div>
@@ -428,10 +428,10 @@ export default{
 .downIcon{
     @apply absolute -bottom-[30px] text-5xl text-white/50 z-[-1];
 }
-.block-enter-active {
+.fade-enter-active {
     animation : fade-in .4s ease 
 }
-.block-leave-active {
+.fade-leave-active {
     animation : fade-out .4s ease 
 }
 @keyframes fade-in {
