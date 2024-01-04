@@ -145,7 +145,7 @@ export default{
         isLeapYear(year){
             return new persianDate([year]).isLeapYear()
         },
-        async tooltipSet($event,status,date){
+        tooltipSet($event,status,date){
             const top = ($event.target.offsetTop + $event.target.scrollTop) - (status != 'today' ? 130 : 130) 
             const left = ($event.target.offsetLeft + $event.target.scrollLeft) - this.iconDown
             
@@ -209,12 +209,8 @@ export default{
             </div>
             <div class="lotterys">
                 <div v-for="(lottery,i) in lotterys" class="boxLottery" ref="lottery" :key="lottery.id">
-                    <div class="flex justify-between">
-                        <div class="text-xl">{{ lottery.name }}</div>
-                        <div class="flex gap-1 border border-white/30 p-1 rounded">
-                            <div>{{ lottery.owner }}</div>
-                            <i class="ri-account-circle-line"></i>
-                        </div>
+                    <div class="flex justify-center py-2">
+                        <div class="text-2xl">{{ lottery.name }}</div>
                     </div>
                     <div class="cleander" ref="cleander"
                     :class="lottery.month.length >= 5 && 'overflow-y-scroll'" :style="[((!isCleanderShow(lottery.id) && lottery.month.length >= 5) && `height:${SDSMC.maxWidthMonth*5}px;`),
@@ -329,6 +325,7 @@ export default{
                                 </div>
                             </div>
                         </div>
+                        <div class="text-center text-white/90">ایجاد شده توسط {{ lottery.owner }}</div>
                     </div>
                 </div>
             </div>
