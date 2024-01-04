@@ -210,7 +210,7 @@ export default{
             <div class="lotterys">
                 <div v-for="(lottery,i) in lotterys" class="boxLottery" ref="lottery" :key="lottery.id">
                     <div class="flex justify-center py-2">
-                        <div class="text-2xl">{{ lottery.name }}</div>
+                        <router-link :to="'/lottery/'+(i+1)" class="text-2xl">{{ lottery.name }}</router-link>
                     </div>
                     <div class="cleander" ref="cleander"
                     :class="lottery.month.length >= 5 && 'overflow-y-scroll'" :style="[((!isCleanderShow(lottery.id) && lottery.month.length >= 5) && `height:${SDSMC.maxWidthMonth*5}px;`),

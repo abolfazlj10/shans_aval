@@ -52,6 +52,10 @@ const router = createRouter({
     {
       path:'/Lotterys',
       component:()=> import('./pages/Lotterys.vue')
+    },
+    {
+      path:'/lottery/:id',
+      component:()=>import('./pages/lottery.vue')
     }
   ]
 })
