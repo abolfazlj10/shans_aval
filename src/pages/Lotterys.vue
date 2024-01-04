@@ -23,7 +23,7 @@ export default{
     },
     methods:{
         async SendReq(){
-            const url = this.url + '/GetLotterys'
+            const url = this.url + '/Lotterys'
             const req = await fetch(url)
             const res = await req.json()
             this.lotterys = await res.data
